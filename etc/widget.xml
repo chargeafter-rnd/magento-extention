@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ ChargeAfter
+  ~
+  ~ @category    Payment Gateway
+  ~ @package     Chargeafter_Payment
+  ~ @copyright   Copyright (c) 2021 ChargeAfter.com
+  ~ @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author      taras@lagan.com.ua
+  -->
+
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Chargeafter\Payment\Block\PromotionalWidgetBlock" id="chargeafter_payment_promotional_widget">
+        <label>Chargeafter Payment Promotional Widget</label>
+        <description>Chargeafter Payment Promotional Widget</description>
+        <parameters>
+            <parameter name="type" xsi:type="select" visible="true" required="true" sort_order="20">
+                <label translate="true">Type</label>
+                <options>
+                    <option name="product-widget" value="product-widget">
+                        <label>product-widget</label>
+                    </option>
+                    <option name="banner-horizontal-upto-6months" value="banner-horizontal-upto-6months">
+                        <label>banner-horizontal-upto-6months</label>
+                    </option>
+                    <option name="product-widget-line-of-credit" value="product-widget-line-of-credit">
+                        <label>product-widget-line-of-credit</label>
+                    </option>
+                    <option name="product-widget-installments" value="product-widget-installments">
+                        <label>product-widget-installments</label>
+                    </option>
+                    <option name="textual" value="textual">
+                        <label>textual</label>
+                    </option>
+                    <option name="banner-horizontal" value="banner-horizontal">
+                        <label>banner-horizontal</label>
+                    </option>
+                    <option name="banner-vertical" value="banner-vertical">
+                        <label>banner-vertical</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="financing-page-url" xsi:type="text" visible="true" sort_order="40">
+                <label translate="true">Financing page url</label>
+            </parameter>
+            <parameter name="mode" xsi:type="select" visible="true" required="true" sort_order="60">
+                <label translate="true">Mode</label>
+                <options>
+                    <option name="price-focus" value="price-focus" selected="true">
+                        <label>Price focus</label>
+                    </option>
+                    <option name="brand-focus" value="brand-focus">
+                        <label>Brand focus</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

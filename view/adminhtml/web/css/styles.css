@@ -1,0 +1,21 @@
+/**
+ * ChargeAfter
+ *
+ * @category    Payment Gateway
+ * @package     Chargeafter_Payment
+ * @copyright   Copyright (c) 2021 ChargeAfter.com
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author      taras@lagan.com.ua
+ */
+
+.section-config.chargeafter-payment-section .chargeafter-payment-logo { display:inline-block; vertical-align: middle; margin: 0 20px 0 0px; width: 180px; height:60px; background: url('../images/ChargeAfter_logo.png') no-repeat center / contain; }
+.section-config.chargeafter-payment-section .button-container { float:right; }
+.section-config.chargeafter-payment-section .chargeafter-payment-byline { display: inline-block; vertical-align: middle; width: 50%; }
+.section-config.with-button.chargeafter-payment-section .config-heading strong { font-weight: normal; }
+.section-config.chargeafter-payment-section .admin__control-radio + .admin__field-label_with-image{display: inline-flex; align-items: center;}
+.section-config.chargeafter-payment-section .admin__control-radio:checked + .admin__field-label_with-image:before{margin-top: 0;}
+.section-config.chargeafter-payment-section .admin__control-radio:checked + .admin__field-label_with-image:after{top: auto;}
+.section-config.chargeafter-payment-section .admin__control-radio{position: absolute}
+.section-config.chargeafter-payment-section > .config.admin__collapsible-block{
+    margin-left: 4rem;
+}

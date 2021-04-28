@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ ChargeAfter
+  ~
+  ~ @category    Payment Gateway
+  ~ @package     Chargeafter_Payment
+  ~ @copyright   Copyright (c) 2021 ChargeAfter.com
+  ~ @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author      taras@lagan.com.ua
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="chargeafter" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[
+                <div class="chargeafter-payment-logo"></div><div class="chargeafter-payment-byline">
+                    Consumers can buy now and pay over time.<br/>Chargeafter is connected to multiple financing partners, and will present your consumers with the best offer available to them within seconds.
+                </div>
+                ]]></label>
+                <fieldset_css>complex chargeafter-payment-section</fieldset_css>
+                <frontend_model>Magento\Paypal\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+                <group id="chargeafter_base"
+                       translate="label"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="0"
+                       sortOrder="20">
+                    <label>Base Settings</label>
+                    <attribute type="expanded">1</attribute>
+                    <field id="active"
+                           translate="label"
+                           type="select"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           canRestore="1"
+                           sortOrder="20">
+                        <label>Enable this Solution</label>
+                        <config_path>payment/chargeafter/active</config_path>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="title"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           canRestore="1"
+                           sortOrder="40">
+                        <label>Title</label>
+                        <config_path>payment/chargeafter/title</config_path>
+                    </field>
+                    <field id="description"
+                           type="textarea"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           canRestore="1"
+                           sortOrder="60">
+                        <label>Description</label>
+                        <config_path>payment/chargeafter/description</config_path>
+                    </field>
+                    <field id="logo"
+                           type="Chargeafter\Payment\Data\Form\Element\Radios"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           canRestore="1"
+                           sortOrder="80">
+                        <label>Logo</label>
+                        <config_path>payment/chargeafter/logo</config_path>
+                        <source_model>Chargeafter\Payment\Model\Config\Source\Logo</source_model>
+                    </field>
+                    <field id="allowspecific"
+                           translate="label comment"
+                           type="select"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           canRestore="1"
+                           sortOrder="100">
+                        <label>Payment from applicable countries</label>
+                        <config_path>payment/chargeafter/allowspecific</config_path>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    </field>
+                    <field id="specificcountry"
+                           translate="label"
+                           type="multiselect"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="120">
+                        <label>Payment from Specific countries</label>
+                        <config_path>payment/chargeafter/specificcountry</config_path>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <depends>
+                            <field id="allowspecific">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           sortOrder="140">
+                        <label>Sort Order</label>
+                        <config_path>payment/chargeafter/sort_order</config_path>
+                        <frontend_class>validate-number</frontend_class>
+                    </field>
+                </group>
+                <group id="chargeafter_api"
+                       translate="label"
+                       sortOrder="20"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="0">
+                    <label>Api Settings</label>
+                    <field id="environment"
+                           type="select"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           canRestore="1"
+                           sortOrder="30">
+                        <label>Mode/Environment</label>
+                        <config_path>payment/chargeafter/environment</config_path>
+                        <source_model>Chargeafter\Payment\Model\Config\Source\Environment</source_model>
+                    </field>
+                    <field id="production_private_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="40">
+                        <label>Production Private API Key</label>
+                        <config_path>payment/chargeafter/production_private_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                    <field id="production_public_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="41">
+                        <label>Production Public API Key</label>
+                        <config_path>payment/chargeafter/production_public_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                    <field id="sandbox_private_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="42">
+                        <label>Sandbox Private API Key</label>
+                        <config_path>payment/chargeafter/sandbox_private_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                    <field id="sandbox_public_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="43">
+                        <label>Sandbox Public API Key</label>
+                        <config_path>payment/chargeafter/sandbox_public_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

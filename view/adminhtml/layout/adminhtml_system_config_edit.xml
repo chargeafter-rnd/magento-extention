@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ ChargeAfter
+  ~
+  ~ @category    Payment Gateway
+  ~ @package     Chargeafter_Payment
+  ~ @copyright   Copyright (c) 2021 ChargeAfter.com
+  ~ @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author      taras@lagan.com.ua
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Chargeafter_Payment::css/styles.css"/>
+    </head>
+</page>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ ChargeAfter
+  ~
+  ~ @category    Payment Gateway
+  ~ @package     Chargeafter_Payment
+  ~ @copyright   Copyright (c) 2021 ChargeAfter.com
+  ~ @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author      taras@lagan.com.ua
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <chargeafter>
+                <active>0</active>
+                <title>Chargeafter payment</title>
+                <description><![CDATA[ Your description goes here ]]></description>
+                <logo></logo>
+                <allowspecific>0</allowspecific>
+                <environment>sandbox</environment>
+                <model>ChargeafterPaymentFacade</model>
+                <can_use_checkout>1</can_use_checkout>
+                <payment_action>authorize</payment_action>
+                <can_authorize>1</can_authorize>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <paymentInfoKeys>lender,chargeId</paymentInfoKeys>
+            </chargeafter>
+        </payment>
+    </default>
+</config>
