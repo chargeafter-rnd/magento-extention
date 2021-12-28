@@ -64,18 +64,6 @@
                         <label>Description</label>
                         <config_path>payment/chargeafter/description</config_path>
                     </field>
-                    <field id="logo"
-                           type="Chargeafter\Payment\Data\Form\Element\Radios"
-                           translate="label"
-                           showInDefault="1"
-                           showInStore="1"
-                           showInWebsite="1"
-                           canRestore="1"
-                           sortOrder="80">
-                        <label>Logo</label>
-                        <config_path>payment/chargeafter/logo</config_path>
-                        <source_model>Chargeafter\Payment\Model\Config\Source\Logo</source_model>
-                    </field>
                     <field id="allowspecific"
                            translate="label comment"
                            type="select"

@@ -24,7 +24,7 @@ class PromotionalWidgetBlockTest extends TestCase
     private $currentProductRegistry;
     private $helper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $managerHelper = new ObjectManager($this);
         $this->helper = $this->createMock(ApiHelper::class);
@@ -33,9 +33,7 @@ class PromotionalWidgetBlockTest extends TestCase
             'helper'=>$this->helper,
             'currentProductRegistry'=>$this->currentProductRegistry,
         ]);
-
     }
-
 
     public function testGetProduct()
     {

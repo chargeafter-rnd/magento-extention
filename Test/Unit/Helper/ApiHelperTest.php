@@ -24,7 +24,7 @@ class ApiHelperTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->config = $this->createMock(ConfigInterface::class);
         $this->helper = new ApiHelper($this->config);
@@ -45,7 +45,6 @@ class ApiHelperTest extends TestCase
         $actual = $this->helper->getApiUrl();
 
         self::assertSame($expected, $actual);
-
     }
 
     /**
@@ -56,11 +55,45 @@ class ApiHelperTest extends TestCase
         return[
             [
                 'environment'=>'sandbox',
-                'expected'=>'https://api-sandbox.ca-dev.co/v1'
+                'expected'=>'https://api-sandbox.ca-dev.co/v2'
             ],
             [
                 'environment'=>'production',
-                'expected'=>'https://api.chargeafter.com/v1'
+                'expected'=>'https://api.chargeafter.com/v2'
+            ]
+        ];
+    }
+
+    /**
+     * @param string $environment
+     * @param string $expected
+     * @dataProvider dataProviderTestGetApiUrlWithoutVersion
+     */
+    public function testGetApiUrlWithoutVersion(string $environment, string $expected)
+    {
+        $this->config->expects($this->once())
+            ->method('getValue')
+            ->with('environment')
+            ->willReturn($environment);
+
+        $actual = $this->helper->getApiUrl(null, null, true);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function dataProviderTestGetApiUrlWithoutVersion(): array
+    {
+        return[
+            [
+                'environment'=>'sandbox',
+                'expected'=>'https://api-sandbox.ca-dev.co'
+            ],
+            [
+                'environment'=>'production',
+                'expected'=>'https://api.chargeafter.com'
             ]
         ];
     }

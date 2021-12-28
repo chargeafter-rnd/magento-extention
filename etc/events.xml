@@ -17,4 +17,7 @@
     <event name="payment_method_assign_data_chargeafter">
         <observer name="chargeafter_gateway_data_assign" instance="Chargeafter\Payment\Observer\DataAssignObserver" />
     </event>
+    <event name="admin_system_config_changed_section_payment">
+        <observer name="chargeafter_payment_config_charged" instance="Chargeafter\Payment\Observer\PaymentConfigChangeObserver" />
+    </event>
 </config>
