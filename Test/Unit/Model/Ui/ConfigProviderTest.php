@@ -35,20 +35,18 @@ class ConfigProviderTest extends TestCase
                 ['description',null,'description'],
                 ['logo',null,$logo]
             ]);
-        $assetRepo = $this->createMock(Repository::class);
-        $assetRepo->expects($logo ? $this->once() : $this->never())
-            ->method('getUrl')
-            ->with("Chargeafter_Payment::images/" . $logo . ".svg")
-            ->willReturnArgument(0);
+
         $helper = $this->createMock(ApiHelper::class);
-        $helper->expects($this->once())
+        $helper->expects($this->any())
             ->method('getCdnUrl')
             ->willReturn('cdnUrl');
         $helper->expects($this->once())
             ->method('getPublicKey')
             ->willReturn('publicKey');
-        $configProvider = new ConfigProvider($method, $assetRepo, $helper);
+
+        $configProvider = new ConfigProvider($method, $helper);
         $actual = $configProvider->getConfig();
+
         self::assertEquals($expected, $actual);
     }
 
@@ -61,7 +59,7 @@ class ConfigProviderTest extends TestCase
                     'payment'=>[
                         'chargeafter'=>[
                             'description'=>'description',
-                            'logo'=> "Chargeafter_Payment::images/logo.svg",
+                            'logo'=> "cdnUrl/assets/brands/logo/button.svg",
                             'cdnUrl' => 'cdnUrl',
                             'publicKey' => 'publicKey'
                         ]

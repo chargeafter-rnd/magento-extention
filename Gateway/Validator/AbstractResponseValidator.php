@@ -10,6 +10,7 @@
  */
 
 namespace Chargeafter\Payment\Gateway\Validator;
+
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 
@@ -45,5 +46,4 @@ abstract class AbstractResponseValidator extends AbstractValidator
      * @return array
      */
     abstract protected function getResponseValidators(): array;
-
 }

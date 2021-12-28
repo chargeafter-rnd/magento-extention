@@ -9,6 +9,7 @@
  * @author      taras@lagan.com.ua
  */
 namespace Chargeafter\Payment\Test\Unit\Gateway\Request;
+
 use Chargeafter\Payment\Gateway\Request\AuthorizeBuilder;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -41,7 +42,7 @@ class AuthorizeBuilderTest extends TestCase
      * @inheritdoc
      * @throws ReflectionException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->builder = new AuthorizeBuilder();
         $this->paymentDOMock = $this->createMock(PaymentDataObjectInterface::class);
@@ -51,8 +52,8 @@ class AuthorizeBuilderTest extends TestCase
         $this->orderMock = $this->getMockBuilder(OrderAdapterInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-
     }
+
     /**
      * @return void
      */

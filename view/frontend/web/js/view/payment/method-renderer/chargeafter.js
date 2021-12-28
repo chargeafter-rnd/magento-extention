@@ -16,7 +16,7 @@ define(
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Chargeafter_Payment/js/action/launch-checkout',
-        'Magento_Checkout/js/action/place-order'
+        'Magento_Checkout/js/action/place-order',
     ],
     function ($, Component, loadApi, quote, additionalValidators, launchCheckoutAction, placeOrderAction) {
         'use strict';
@@ -28,11 +28,11 @@ define(
             },
             initialize: function () {
                 this._super();
+
                 loadApi(this.getConfig('cdnUrl'), {
-                    apiKey: this.getConfig('publicKey'),
-                    // Optional:
-                    // storeId: 'your-store-id'
+                    apiKey: this.getConfig('publicKey')
                 });
+
                 return this;
             },
             getConfig: function (key){

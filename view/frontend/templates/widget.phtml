@@ -24,11 +24,14 @@
 </script>
 <?php
 $widget_type = $block->getData('type');
-if (in_array($widget_type, ['product-widget','product-widget-line-of-credit','product-widget-installments']) && !$product = $block->getProduct()) {
+if (in_array($widget_type, ['product-widget','product-widget-line-of-credit','product-widget-installments'])
+    && !$product = $block->getProduct()) {
     $widget_type = '';
 }
 
-$output = "<div class=\"ca-promotional-widget\" data-widget-type=\"$widget_type\" data-widget-mode=\"{$block->getData('mode')}\"";
+$output = "<div class=\"ca-promotional-widget\"";
+$output .= " data-widget-type=\"$widget_type\"";
+$output .= " data-widget-mode=\"{$block->getData('mode')}\"";
 if (in_array($widget_type, ['product-widget','product-widget-line-of-credit','product-widget-installments'])) {
     $output .= " data-widget-item-sku=\"{$product->getSku()}\" data-widget-item-price=\"{$product->getFinalPrice()}\"";
 }

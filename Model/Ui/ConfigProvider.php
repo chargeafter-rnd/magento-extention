@@ -12,7 +12,6 @@
 namespace Chargeafter\Payment\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Magento\Framework\View\Asset\Repository as AssetRepository;
 use Magento\Payment\Model\MethodInterface;
 use Chargeafter\Payment\Helper\ApiHelper;
 
@@ -23,14 +22,12 @@ use Chargeafter\Payment\Helper\ApiHelper;
 class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'chargeafter';
+
     /**
      * @var MethodInterface
      */
     protected $_method;
-    /**
-     * @var AssetRepository
-     */
-    protected $_assetRepo;
+
     /**
      * @var ApiHelper
      */
@@ -39,16 +36,13 @@ class ConfigProvider implements ConfigProviderInterface
     /**
      * ConfigProvider constructor.
      * @param MethodInterface $method
-     * @param AssetRepository $assetRepo
      * @param ApiHelper $helper
      */
     public function __construct(
         MethodInterface $method,
-        AssetRepository $assetRepo,
         ApiHelper $helper
     ) {
         $this->_method = $method;
-        $this->_assetRepo = $assetRepo;
         $this->_helper = $helper;
     }
 
@@ -61,7 +55,8 @@ class ConfigProvider implements ConfigProviderInterface
             'payment'=>[
                 self::CODE=>[
                     'description'=>$this->_method->getConfigData('description'),
-                    'logo'=> ($logo = $this->_method->getConfigData('logo')) ? $this->_assetRepo->getUrl("Chargeafter_Payment::images/" . $logo . ".svg") : null,
+                    'logo'=> ($logo = $this->_method->getConfigData('logo'))
+                                ? $this->_helper->getCdnUrl() . "/assets/brands/{$logo}/button.svg" : null,
                     'cdnUrl' => $this->_helper->getCdnUrl(),
                     'publicKey' => $this->_helper->getPublicKey()
                 ]
