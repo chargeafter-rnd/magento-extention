@@ -18,6 +18,7 @@
             <argument name="valueHandlerPool" xsi:type="object">ChargeafterPaymentValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">ChargeafterValidatorPool</argument>
             <argument name="commandPool" xsi:type="object">ChargeafterPaymentCommandPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="infoBlockType" xsi:type="string">ChargeafterPaymentInfoBlockType</argument>
         </arguments>
     </virtualType>
