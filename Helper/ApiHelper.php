@@ -73,9 +73,11 @@ class ApiHelper
      */
     public function getPublicKey($storeId = null)
     {
-        return $this->_config->getValue('environment', $storeId)==='sandbox'
-                    ? $this->_config->getValue('sandbox_public_key', $storeId)
-                    : $this->_config->getValue('production_public_key', $storeId);
+        $value = $this->_config->getValue('environment', $storeId) === 'sandbox'
+            ? $this->_config->getValue('sandbox_public_key', $storeId)
+            : $this->_config->getValue('production_public_key', $storeId);
+
+        return trim($value);
     }
 
     /**
@@ -84,8 +86,10 @@ class ApiHelper
      */
     public function getPrivateKey($storeId = null)
     {
-        return $this->_config->getValue('environment', $storeId)==='sandbox'
-                    ? $this->_config->getValue('sandbox_private_key', $storeId)
-                    : $this->_config->getValue('production_private_key', $storeId);
+        $value = $this->_config->getValue('environment', $storeId) === 'sandbox'
+            ? $this->_config->getValue('sandbox_private_key', $storeId)
+            : $this->_config->getValue('production_private_key', $storeId);
+
+        return trim($value);
     }
 }

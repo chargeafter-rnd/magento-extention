@@ -57,6 +57,11 @@
             <argument name="config" xsi:type="object">ChargeafterPaymentConfig</argument>
         </arguments>
     </type>
+    <type name="Chargeafter\Payment\Service\SessionService">
+        <arguments>
+            <argument name="driver" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
     <virtualType name="ChargeafterPaymentCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
