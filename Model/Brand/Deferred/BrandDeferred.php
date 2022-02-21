@@ -20,6 +20,8 @@ use Magento\Framework\Async\DeferredInterface;
  */
 class BrandDeferred implements DeferredInterface
 {
+    private const DEFAULT_BRAND = "chargeafter";
+
     /**
      * @var bool
      */
@@ -56,7 +58,7 @@ class BrandDeferred implements DeferredInterface
     {
         if (!$this->brand) {
             $this->brand = [
-                'brandId'    => $this->getBrandIdFromSettings($merchantId),
+                'brandId'    => $this->getBrandIdFromSettings($merchantId, self::DEFAULT_BRAND),
                 'merchantId' => $this->getMerchantId()
             ];
             $this->done = true;
@@ -75,19 +77,20 @@ class BrandDeferred implements DeferredInterface
 
     /**
      * @param $merchantId
+     * @param string|null $default
      * @return string|null
      */
-    private function getBrandIdFromSettings($merchantId):? string
+    private function getBrandIdFromSettings($merchantId, $default = null):? string
     {
         if (empty($merchantId)) {
             $sessionId = $this->sessionService->createSession();
             if (empty($sessionId)) {
-                return null;
+                return $default;
             }
 
             $merchantId = $this->sessionService->getMerchantBySession($sessionId);
             if (empty($merchantId)) {
-                return null;
+                return $default;
             }
         }
 
@@ -95,12 +98,12 @@ class BrandDeferred implements DeferredInterface
 
         $settings = $this->sessionService->getSettingByMerchant($merchantId);
         if (empty($settings)) {
-            return null;
+            return $default;
         }
 
         return key_exists('brandId', $settings)
                 ? mb_strtolower($settings['brandId'])
-                : null;
+                : $default;
     }
 
     /**

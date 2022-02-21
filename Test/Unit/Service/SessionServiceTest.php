@@ -13,6 +13,7 @@ namespace Chargeafter\Payment\Test\Unit\Service;
 
 use Chargeafter\Payment\Helper\ApiHelper;
 use Chargeafter\Payment\Service\SessionService;
+use Magento\Framework\Filesystem\DriverInterface;
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\HTTP\ClientInterface;
 use Magento\Store\Model\Store;
@@ -51,6 +52,11 @@ class SessionServiceTest extends TestCase
      */
     private $apiHelperMock;
 
+    /**
+     * @var DriverInterface
+     */
+    private $driverMock;
+
     protected function setUp(): void
     {
         $this->clientMock = $this->getMockBuilder(ClientInterface::class)
@@ -85,6 +91,8 @@ class SessionServiceTest extends TestCase
         $this->apiHelperMock->expects($this->any())
                             ->method('getCdnUrl')
                             ->willReturn('cdnUrl');
+
+        $this->driverMock = $this->createMock(DriverInterface::class);
     }
 
     /**
@@ -99,7 +107,8 @@ class SessionServiceTest extends TestCase
         $sessionService = new SessionService(
             $this->clientFactoryMock,
             $this->storeManagerFactoryMock,
-            $this->apiHelperMock
+            $this->apiHelperMock,
+            $this->driverMock
         );
         $actual = $sessionService->createSession();
 
@@ -132,7 +141,8 @@ class SessionServiceTest extends TestCase
         $sessionService = new SessionService(
             $this->clientFactoryMock,
             $this->storeManagerFactoryMock,
-            $this->apiHelperMock
+            $this->apiHelperMock,
+            $this->driverMock
         );
         $actual = $sessionService->getMerchantBySession($sessionId);
 

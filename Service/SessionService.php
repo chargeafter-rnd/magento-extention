@@ -14,6 +14,7 @@ namespace Chargeafter\Payment\Service;
 use Chargeafter\Payment\Helper\ApiHelper;
 use Exception;
 use GuzzleHttp\Psr7\Response;
+use Magento\Framework\Filesystem\DriverInterface;
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\Webapi\Rest\Request;
 use Magento\Store\Model\StoreManagerInterface;
@@ -41,6 +42,11 @@ class SessionService
     private $apiHelper;
 
     /**
+     * @var DriverInterface
+     */
+    private $driver;
+
+    /**
      * SessionService constructor.
      *
      * @param ClientFactory $clientFactory
@@ -50,11 +56,13 @@ class SessionService
     public function __construct(
         ClientFactory $clientFactory,
         StoreManagerInterface $storeManager,
-        ApiHelper $apiHelper
+        ApiHelper $apiHelper,
+        DriverInterface $driver
     ) {
         $this->clientFactory = $clientFactory;
         $this->storeManager = $storeManager;
         $this->apiHelper = $apiHelper;
+        $this->driver = $driver;
     }
 
     /**
@@ -62,19 +70,13 @@ class SessionService
      */
     public function createSession()
     {
-        $body = [
-            'requestInfo' => [
-                'flowType' => 'Apply',
-                'channel' => 'InStore',
-                'source' => 'Api'
-            ]
-        ];
+        $body['requestInfo'] = ['flowType' => 'Apply', 'channel' => 'e_commerce', 'source' => 'Api'];
 
         $response = $this->content(
             $this->request('/api/sessions', $body, Request::HTTP_METHOD_POST)
         );
 
-        return key_exists('id', $response) ? $response['id'] : null;
+        return is_array($response) && key_exists('id', $response) ? $response['id'] : null;
     }
 
     /**
@@ -87,7 +89,7 @@ class SessionService
             $this->request("/api/sessions/{$sessionId}?projection=MerchantId")
         );
 
-        return key_exists('data', $response)
+        return is_array($response) && key_exists('data', $response)
                 ? ( key_exists('merchantId', $response['data']) ? $response['data']['merchantId'] : null )
                 : null;
     }
@@ -102,9 +104,7 @@ class SessionService
             $storeId = $this->storeManager->getStore()->getId();
             $uri = $this->apiHelper->getCdnUrl($storeId) . "/assets/merchants/{$merchantId}/settings.json";
 
-            //@codingStandardsIgnoreStart
-            $settings = @file_get_contents($uri);
-            //@codingStandardsIgnoreEnd
+            $settings = $this->driver->fileGetContents($uri);
             if (!empty($settings)) {
                 $json_settings = json_decode($settings, true);
                 if (empty($json_settings)) {
@@ -157,11 +157,7 @@ class SessionService
                     $client->get($uri);
             }
 
-            $response = new Response(
-                $client->getStatus(),
-                $client->getHeaders(),
-                $client->getBody(),
-            );
+            $response = new Response($client->getStatus(), $client->getHeaders(), $client->getBody());
         } catch (\Exception $exception) {
             $response = new Response(500, [], null, '1.1', $exception->getMessage());
         }
