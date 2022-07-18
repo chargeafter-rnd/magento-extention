@@ -59,7 +59,7 @@ class PaymentConfigChangeObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $changedPaths = (array) $observer->getEvent()->getChangedPaths();
-        $chargeAfterPaths = array_reduce($changedPaths, [$this, '_matcher'], []);
+        $chargeAfterPaths = array_reduce($changedPaths, [$this, 'matcher'], []);
         $storeId = $this->storeManager->getStore()->getId();
 
         if (!empty($chargeAfterPaths) && !empty($this->apiHelper->getPublicKey($storeId))) {
@@ -72,7 +72,7 @@ class PaymentConfigChangeObserver implements ObserverInterface
      * @param $str
      * @return mixed
      */
-    private function _matcher($m, $str)
+    protected function matcher($m, $str)
     {
         if (preg_match('/payment\/chargeafter\/(\w+)/i', $str, $matches)) {
             if ($matches[1] != 'sort_order') {
