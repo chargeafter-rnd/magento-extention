@@ -2,7 +2,7 @@ name: ExtDN M2 Copy Paste Detector
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
