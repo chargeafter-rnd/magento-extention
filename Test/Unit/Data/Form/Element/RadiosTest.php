@@ -36,7 +36,10 @@ class RadiosTest extends TestCase
         $_assetRepo->expects($option['value'] ? $this->once() : $this->never())
             ->method('getUrl')
             ->with("Chargeafter_Payment::images/" . $option['value'] . ".svg")
-            ->willReturn("https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/adminhtml/Magento/backend/en_US/Chargeafter_Payment/images/$option[value].svg");
+            ->willReturn(
+                "https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/adminhtml/" .
+                "Magento/backend/en_US/Chargeafter_Payment/images/$option[value].svg"
+            );
         $radios = $objectManager->getObject(Radios::class, [
             '_assetRepo'=>$_assetRepo,
             'escaper'=>new Escaper(),
@@ -67,7 +70,12 @@ class RadiosTest extends TestCase
                     'label'=>'No Image'
                 ],
                 'selected'=>'Btn_CF',
-                'expected'=>'<div class="admin__field admin__field-option"><input type="radio" type="radios"  name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" value="" class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logo" /><label class="admin__field-label admin__field-label_with-image" for="payment_us_chargeafter_chargeafter_base_logo"><span>No Image</span></label></div>'
+                'expected'=>'<div class="admin__field admin__field-option">' .
+                    '<input type="radio" type="radios"  ' .
+                        'name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" ' .
+                        'value="" class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logo" />' .
+                    '<label class="admin__field-label admin__field-label_with-image" ' .
+                        'for="payment_us_chargeafter_chargeafter_base_logo"><span>No Image</span></label></div>'
             ],
             [
                 'option'=>[
@@ -75,7 +83,14 @@ class RadiosTest extends TestCase
                     'label' => 'Btn_CA',
                 ],
                 'selected'=>'Btn_CF',
-                'expected'=>'<div class="admin__field admin__field-option"><input type="radio" type="radios"  name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" value="Btn_CA" class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logoBtn_CA" /><label class="admin__field-label admin__field-label_with-image" for="payment_us_chargeafter_chargeafter_base_logoBtn_CA"><span><img type="hidden" src="https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/adminhtml/Magento/backend/en_US/Chargeafter_Payment/images/Btn_CA.svg"></span></label></div>'
+                'expected'=>'<div class="admin__field admin__field-option">' .
+                    '<input type="radio" type="radios"  ' .
+                        'name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" value="Btn_CA" ' .
+                        'class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logoBtn_CA" />' .
+                    '<label class="admin__field-label admin__field-label_with-image" ' .
+                        'for="payment_us_chargeafter_chargeafter_base_logoBtn_CA"><span>' .
+                    '<img type="hidden" src="https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/' .
+                        'adminhtml/Magento/backend/en_US/Chargeafter_Payment/images/Btn_CA.svg"></span></label></div>'
             ],
             [
                 'option'=>[
@@ -83,7 +98,15 @@ class RadiosTest extends TestCase
                     'label' => 'Btn_CF',
                 ],
                 'selected'=>'Btn_CF',
-                'expected'=>'<div class="admin__field admin__field-option"><input type="radio" type="radios"  name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" value="Btn_CF" class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logoBtn_CF" checked="checked" /><label class="admin__field-label admin__field-label_with-image" for="payment_us_chargeafter_chargeafter_base_logoBtn_CF"><span><img type="hidden" src="https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/adminhtml/Magento/backend/en_US/Chargeafter_Payment/images/Btn_CF.svg"></span></label></div>'
+                'expected'=>'<div class="admin__field admin__field-option">' .
+                    '<input type="radio" type="radios"  ' .
+                        'name="groups[chargeafter][groups][chargeafter_base][fields][logo][value]" value="Btn_CF" ' .
+                        'class="admin__control-radio" id="payment_us_chargeafter_chargeafter_base_logoBtn_CF" ' .
+                        'checked="checked" />' .
+                    '<label class="admin__field-label admin__field-label_with-image" ' .
+                        'for="payment_us_chargeafter_chargeafter_base_logoBtn_CF"><span>' .
+                    '<img type="hidden" src="https://v236-charge-after.dev.lagan.com.ua/static/version1612575068/' .
+                        'adminhtml/Magento/backend/en_US/Chargeafter_Payment/images/Btn_CF.svg"></span></label></div>'
             ]
         ];
     }
