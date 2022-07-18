@@ -17,6 +17,10 @@ use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class VoidTransferFactoryTest
+ * @package Chargeafter\Payment\Test\Unit\Gateway\Http
+ */
 class VoidTransferFactoryTest extends TestCase
 {
     /**

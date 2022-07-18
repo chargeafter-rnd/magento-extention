@@ -18,6 +18,10 @@ use Magento\Sales\Model\Order\Payment;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
+/**
+ * Class RefundBuilderTest
+ * @package Chargeafter\Payment\Test\Unit\Gateway\Request
+ */
 class RefundBuilderTest extends TestCase
 {
     /**

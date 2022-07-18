@@ -17,6 +17,10 @@ use Chargeafter\Payment\Helper\ApiHelper;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class AuthorizeTransferFactoryTest
+ * @package Chargeafter\Payment\Test\Unit\Gateway\Http
+ */
 class AuthorizeTransferFactoryTest extends TestCase
 {
     /**

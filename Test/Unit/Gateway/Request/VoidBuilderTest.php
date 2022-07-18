@@ -18,6 +18,10 @@ use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
+/**
+ * Class VoidBuilderTest
+ * @package Chargeafter\Payment\Test\Unit\Gateway\Request
+ */
 class VoidBuilderTest extends TestCase
 {
     /**

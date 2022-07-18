@@ -17,6 +17,10 @@ use Magento\Sales\Model\Order\Payment;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
+/**
+ * Class RefundHandlerTest
+ * @package Chargeafter\Payment\Test\Unit\Gateway\Response
+ */
 class RefundHandlerTest extends TestCase
 {
     /**
