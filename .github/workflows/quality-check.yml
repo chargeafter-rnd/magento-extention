@@ -75,8 +75,6 @@ jobs:
     env:
       MODULE_NAME: ${{ secrets.MODULE_NAME }}
       COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
-      MAGENTO_MARKETPLACE_USERNAME: ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }}
-      MAGENTO_MARKETPLACE_PASSWORD: ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - uses: extdn/github-actions-m2/magento-unit-tests/7.3@master
