@@ -29,46 +29,6 @@ jobs:
         with:
           composer_name: ${{ secrets.COMPOSER_NAME }}
 
-  integration-tests:
-    name: Magento 2 Integration Tests
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306:3306
-        options: --tmpfs /tmp:rw --tmpfs /var/lib/mysql:rw --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      es:
-        image: docker.io/wardenenv/elasticsearch:7.8
-        ports:
-          - 9200:9200
-        env:
-          'discovery.type': single-node
-          'xpack.security.enabled': false
-          ES_JAVA_OPTS: "-Xms64m -Xmx512m"
-        options: --health-cmd="curl localhost:9200/_cluster/health?wait_for_status=yellow&timeout=60s" --health-interval=10s --health-timeout=5s --health-retries=3
-    env:
-      MODULE_NAME: ${{ secrets.MODULE_NAME }}
-      COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: M2 Integration Tests with Magento 2 (Php7.3)
-        uses: extdn/github-actions-m2/magento-integration-tests/7.3@master
-        env:
-          MAGENTO_VERSION: '2.3.7-p3'
-      - name: M2 Integration Tests with Magento 2 (Php7.4)
-        uses: extdn/github-actions-m2/magento-integration-tests/7.4@master
-        env:
-          MAGENTO_VERSION: '2.4.3-p2'
-          COMPOSER_VERSION: '2'
-      - name: M2 Integration Tests with Magento 2 (Php8.1)
-        uses: extdn/github-actions-m2/magento-integration-tests/8.1@master
-        env:
-          MAGENTO_VERSION: '2.4.4'
-          COMPOSER_VERSION: '2'
-
   unit-tests:
     name: Magento 2 Unit Tests
     runs-on: ubuntu-latest
@@ -83,6 +43,7 @@ jobs:
       - uses: extdn/github-actions-m2/magento-unit-tests/7.4@master
         env:
           MAGENTO_VERSION: '2.4.3-p2'
+          COMPOSER_VERSION: '2'
       - uses: extdn/github-actions-m2/magento-unit-tests/8.1@master
         env:
           MAGENTO_VERSION: '2.4.4'
