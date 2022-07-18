@@ -1,4 +1,4 @@
-name: ExtDN M2 Integration Tests
+name: ExtDN M2 Coding Quality Check
 on:
   push:
     branches:
@@ -6,6 +6,29 @@ on:
   pull_request:
 
 jobs:
+  static:
+    name: M2 Coding Standard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: extdn/github-actions-m2/magento-coding-standard@master
+
+  phpmd:
+    name: M2 Mess Detector
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: extdn/github-actions-m2/magento-mess-detector@master
+
+  phpstan:
+    name: M2 PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: extdn/github-actions-m2/magento-phpstan@master
+        with:
+          composer_name: ${{ secrets.COMPOSER_NAME }}
+
   integration-tests:
     name: Magento 2 Integration Tests
     runs-on: ubuntu-latest
