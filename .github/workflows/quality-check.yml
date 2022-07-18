@@ -75,7 +75,7 @@ jobs:
     env:
       MODULE_NAME: ${{ secrets.MODULE_NAME }}
       COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
-      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+#      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       COMPOSER_VERSION: '2'
     steps:
       - uses: actions/checkout@v2
