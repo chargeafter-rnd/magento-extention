@@ -17,10 +17,6 @@ use Magento\Sales\Model\Order\Payment;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-/**
- * Class VoidHandlerTest
- * @package Chargeafter\Payment\Test\Unit\Gateway\Response
- */
 class VoidHandlerTest extends TestCase
 {
     /**
