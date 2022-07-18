@@ -25,14 +25,19 @@ abstract class AbstractResponseValidator extends AbstractValidator
         $isValid = true;
         $errorMessages = [];
         $errorCodes = [];
+        $currentErrorMessages = [];
 
         foreach ($this->getResponseValidators() as $validator) {
             $validationResult = $validator($validationSubject);
 
             if (!$validationResult[0]) {
                 $isValid = $validationResult[0];
-                $errorMessages = array_merge($errorMessages, $validationResult[1]);
+                $currentErrorMessages[] = $validationResult[1];
             }
+        }
+
+        if (!empty($currentErrorMessages)) {
+            $errorMessages = array_merge([], ...$currentErrorMessages);
         }
 
         return $this->createResult($isValid, $errorMessages, $errorCodes);
