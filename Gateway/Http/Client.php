@@ -20,10 +20,6 @@ use Magento\Payment\Gateway\Http\ConverterInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use Zend_Http_Client_Exception;
 
-/**
- * Class Client
- * @package Chargeafter\Payment\Gateway\Http
- */
 class Client implements ClientInterface
 {
     /**

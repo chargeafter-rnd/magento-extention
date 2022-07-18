@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Registry;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 
-/**
- * Class CurrentProductRegistry
- * @package Chargeafter\Payment\Registry
- */
 class CurrentProductRegistry
 {
     /**

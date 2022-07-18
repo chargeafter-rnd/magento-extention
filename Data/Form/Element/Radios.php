@@ -16,10 +16,6 @@ use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
 
-/**
- * Class Radios
- * @package Chargeafter\Payment\Data\Form\Element
- */
 class Radios extends \Magento\Framework\Data\Form\Element\Radios
 {
     /**

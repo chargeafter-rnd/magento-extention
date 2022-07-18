@@ -14,10 +14,6 @@ namespace Chargeafter\Payment\Model\Brand\Deferred;
 use Chargeafter\Payment\Service\SessionService;
 use Magento\Framework\Async\DeferredInterface;
 
-/**
- * Class Deferred
- * @package Chargeafter\Payment\Deferred
- */
 class BrandDeferred implements DeferredInterface
 {
     private const DEFAULT_BRAND = "chargeafter";

@@ -18,10 +18,6 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class PaymentConfigChangeObserver
- * @package Chargeafter\Payment\Observer
- */
 class PaymentConfigChangeObserver implements ObserverInterface
 {
     /**

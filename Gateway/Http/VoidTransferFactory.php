@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Http;
 
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-/**
- * Class VoidTransferFactory
- * @package Chargeafter\Payment\Gateway\Http
- */
 class VoidTransferFactory extends TransferFactory
 {
     /**

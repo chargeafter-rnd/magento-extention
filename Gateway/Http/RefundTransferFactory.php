@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Http;
 
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-/**
- * Class RefundTransferFactory
- * @package Chargeafter\Payment\Gateway\Http
- */
 class RefundTransferFactory extends TransferFactory
 {
     /**

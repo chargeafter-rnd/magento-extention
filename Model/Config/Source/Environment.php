@@ -11,10 +11,6 @@
 
 namespace Chargeafter\Payment\Model\Config\Source;
 
-/**
- * Class Environment
- * @package Chargeafter\Payment\Model\Config\Source
- */
 class Environment implements \Magento\Framework\Data\OptionSourceInterface
 {
     const ENVIRONMENT_SANDBOX = 'sandbox';

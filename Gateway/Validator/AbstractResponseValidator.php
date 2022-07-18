@@ -14,10 +14,6 @@ namespace Chargeafter\Payment\Gateway\Validator;
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 
-/**
- * Class AbstractResponseValidator
- * @package Chargeafter\Payment\Gateway\Validator
- */
 abstract class AbstractResponseValidator extends AbstractValidator
 {
     /**

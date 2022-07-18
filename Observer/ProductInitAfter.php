@@ -16,10 +16,6 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 
-/**
- * Class ProductInitAfter
- * @package Chargeafter\Payment\Observer
- */
 class ProductInitAfter implements ObserverInterface
 {
     /**
