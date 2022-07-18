@@ -75,6 +75,7 @@ jobs:
     env:
       MODULE_NAME: ${{ secrets.MODULE_NAME }}
       COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
     steps:
       - uses: actions/checkout@v2
       - uses: extdn/github-actions-m2/magento-unit-tests/7.3@master
