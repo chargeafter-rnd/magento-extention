@@ -1,5 +1,15 @@
-# chargeafter-magento2-module-payment
-## Magento 2 install extension using command line
+# ChargeAfter Magento2 Payment Plugin
+
+Payment extension provides POS financing, installments, and [BNPL for Magento](https://chargeafter.com/magento-consumer-financing/) sites from ChargAfter.  With ChargeAfter, you can provide your shoppers personalized financing from multiple lenders - no matter their credit type or score using a single application, online or in-store.
+
+## Requirements
+
+    PHP 7.2 or higher
+    PHP tested up to 8.1
+    Magento tested up to 2.4.4
+
+## Installation
+### Using command line
 
 Your Magento 2.x extensions can be installed in a few minutes by going through these following steps:
 
@@ -17,6 +27,7 @@ Your Magento 2.x extensions can be installed in a few minutes by going through t
     - `php bin/magento setup:upgrade`
 9. The module should now be installed and visible:
     - `php bin/magento module:status Chargeafter_Payment`
+
 ## Magento 2 extension configuration
 
 1. Login to the Magento 2 Admin Dashboard
