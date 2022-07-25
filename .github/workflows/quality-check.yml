@@ -80,8 +80,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: extdn/github-actions-m2/magento-unit-tests/7.4@master
+        with:
+          magento_pre_install_script: './.github/unit-tests-setup.sh'
         env:
           MAGENTO_VERSION: '2.4.3-p2'
       - uses: extdn/github-actions-m2/magento-unit-tests/8.1@master
+        with:
+          magento_pre_install_script: './.github/unit-tests-setup.sh'
         env:
           MAGENTO_VERSION: '2.4.4'
