@@ -14,9 +14,9 @@
     {
         "*": {
             "Chargeafter_Payment/js/widget": {
-                "cdnUrl": "<?= $block->getCdnUrl() ?>",
+                "cdnUrl": "<?= /* @noEscape */ $block->getCdnUrl() ?>",
                 "caConfig": {
-                    "apiKey": "<?= $block->getPublicKey() ?>"
+                    "apiKey": "<?= /* @noEscape */ $block->getPublicKey() ?>"
                 }
             }
         }
@@ -40,4 +40,4 @@ if ($block->getData('financing-page-url')) {
 }
 $output .= "></div>";
 
-echo $output;
+/* @noEscape */ echo $output;

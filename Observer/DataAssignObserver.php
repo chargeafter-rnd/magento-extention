@@ -15,10 +15,6 @@ use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 
-/**
- * Class DataAssignObserver
- * @package Chargeafter\Payment\Observer
- */
 class DataAssignObserver extends AbstractDataAssignObserver
 {
     const TOKEN = 'token';

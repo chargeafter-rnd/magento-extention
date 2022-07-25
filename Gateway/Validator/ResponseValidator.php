@@ -11,10 +11,6 @@
 
 namespace Chargeafter\Payment\Gateway\Validator;
 
-/**
- * Class ResponseValidator
- * @package Chargeafter\Payment\Gateway\Validator
- */
 class ResponseValidator extends AbstractResponseValidator
 {
     /**

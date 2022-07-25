@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Http;
 
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-/**
- * Class CaptureTransferFactory
- * @package Chargeafter\Payment\Gateway\Http
- */
 class CaptureTransferFactory extends TransferFactory
 {
     /**

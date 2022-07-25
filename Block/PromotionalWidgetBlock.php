@@ -17,10 +17,6 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Widget\Block\BlockInterface;
 
-/**
- * Class PromotionalWidgetBlock
- * @package Chargeafter\Payment\ViewModel
- */
 class PromotionalWidgetBlock extends Template implements BlockInterface
 {
     protected $_template = "widget.phtml";

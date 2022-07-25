@@ -21,10 +21,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class SessionServiceTest
- * @package Chargeafter\Payment\Test\Unit\Service
- */
 class SessionServiceTest extends TestCase
 {
     /**

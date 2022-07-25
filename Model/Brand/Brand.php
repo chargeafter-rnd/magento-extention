@@ -17,10 +17,6 @@ use Chargeafter\Payment\Model\Ui\ConfigProvider;
 use Magento\Config\Model\ResourceModel\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-/**
- * Class Brand
- * @package Chargeafter\Payment\Model\Brand
- */
 class Brand
 {
     private static $defaultLogo = 'chargeafter';

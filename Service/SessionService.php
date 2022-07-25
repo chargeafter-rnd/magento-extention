@@ -20,10 +20,6 @@ use Magento\Framework\Webapi\Rest\Request;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\HTTP\ClientInterface;
 
-/**
- * Class SessionService
- * @package Chargeafter\Payment\Service
- */
 class SessionService
 {
     /**

@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Helper;
 
 use Magento\Payment\Gateway\ConfigInterface;
 
-/**
- * Class ApiHelper
- * @package Chargeafter\Payment\Helper
- */
 class ApiHelper
 {
     const PRODUCTION_CDN_URL = "https://cdn.chargeafter.com";
