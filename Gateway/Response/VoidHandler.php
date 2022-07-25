@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 
-/**
- * Class VoidHandler
- * @package Chargeafter\Payment\Gateway\Response
- */
 class VoidHandler implements HandlerInterface
 {
 

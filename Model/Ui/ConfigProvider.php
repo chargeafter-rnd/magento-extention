@@ -15,10 +15,6 @@ use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Payment\Model\MethodInterface;
 use Chargeafter\Payment\Helper\ApiHelper;
 
-/**
- * Class ConfigProvider
- * @package Chargeafter\Payment\Model\Ui
- */
 class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'chargeafter';

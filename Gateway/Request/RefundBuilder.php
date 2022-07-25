@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
 
-/**
- * Class RefundBuilder
- * @package Chargeafter\Payment\Gateway\Request
- */
 class RefundBuilder implements BuilderInterface
 {
     /**

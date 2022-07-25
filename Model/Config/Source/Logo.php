@@ -10,10 +10,7 @@
  */
 
 namespace Chargeafter\Payment\Model\Config\Source;
-/**
- * Class Logo
- * @package Chargeafter\Payment\Model\Config\Source
- */
+
 class Logo implements \Magento\Framework\Data\OptionSourceInterface
 {
 

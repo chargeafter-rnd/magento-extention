@@ -13,10 +13,6 @@ namespace Chargeafter\Payment\Gateway\Response;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 
-/**
- * Class AuthoriseHandler
- * @package Chargeafter\Payment\Gateway\Response
- */
 class AuthoriseHandler implements HandlerInterface
 {
 

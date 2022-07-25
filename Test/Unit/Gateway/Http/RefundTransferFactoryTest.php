@@ -17,10 +17,6 @@ use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RefundTransferFactoryTest
- * @package Chargeafter\Payment\Test\Unit\Gateway\Http
- */
 class RefundTransferFactoryTest extends TestCase
 {
     /**

@@ -15,10 +15,6 @@ use Chargeafter\Payment\Helper\ApiHelper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
-/**
- * Class PaymentMethodIsActive
- * @package Chargeafter\Payment\Observer
- */
 class PaymentMethodIsActive implements ObserverInterface
 {
     /**

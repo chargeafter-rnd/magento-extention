@@ -15,10 +15,6 @@ use Chargeafter\Payment\Helper\ApiHelper;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 
-/**
- * Class TransferFactory
- * @package Chargeafter\Payment\Gateway\Http
- */
 abstract class TransferFactory implements TransferFactoryInterface
 {
     /**
