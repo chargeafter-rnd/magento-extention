@@ -23,7 +23,7 @@ class ResponseValidator extends AbstractResponseValidator
                 $response = $validationSubject['response'];
                 return [
                     !key_exists('code', $response),
-                    [$response['message'] ?? __('Braintree error response.')]
+                    [$response['message'] ?? __('ChargeAfter error response.')]
                 ];
             }
         ];

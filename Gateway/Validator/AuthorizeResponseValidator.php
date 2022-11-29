@@ -22,8 +22,8 @@ class AuthorizeResponseValidator extends ResponseValidator
             function ($validationSubject) {
                 $response = $validationSubject['response'];
                 return [
-                    key_exists('state', $response) && $response['state'] === 'AUTHORIZED',
-                    [$response['message'] ?? __('Braintree error response.')]
+                    key_exists('state', $response) && mb_strtolower($response['state']) === 'authorized',
+                    [$response['message'] ?? __('ChargeAfter error response.')]
                 ];
             }
         ];

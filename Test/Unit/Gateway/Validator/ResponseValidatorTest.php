@@ -71,7 +71,7 @@ class ResponseValidatorTest extends TestCase
                 ],
                 'isValid'=>false,
                 'messages'=>[
-                    'Braintree error response.'
+                    'ChargeAfter error response.'
                 ],
                 'errorCodes'=>[]
             ],
