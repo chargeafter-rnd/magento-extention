@@ -69,23 +69,23 @@ jobs:
           MAGENTO_VERSION: '2.4.4'
           COMPOSER_VERSION: '2'
 
-#  unit-tests:
-#    name: Magento 2 Unit Tests
-#    runs-on: ubuntu-latest
-#    env:
-#      MODULE_NAME: ${{ secrets.MODULE_NAME }}
-#      COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
-#      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-#      COMPOSER_VERSION: '2'
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: extdn/github-actions-m2/magento-unit-tests/7.4@master
-#        with:
-#          magento_pre_install_script: './.github/scripts/unit-tests-setup.sh'
-#        env:
-#          MAGENTO_VERSION: '2.4.3-p2'
-#      - uses: extdn/github-actions-m2/magento-unit-tests/8.1@master
-#        with:
-#          magento_pre_install_script: './.github/scripts/unit-tests-setup.sh'
-#        env:
-#          MAGENTO_VERSION: '2.4.4'
+  unit-tests:
+   name: Magento 2 Unit Tests
+   runs-on: ubuntu-latest
+   env:
+     MODULE_NAME: ${{ secrets.MODULE_NAME }}
+     COMPOSER_NAME: ${{ secrets.COMPOSER_NAME }}
+     COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+     COMPOSER_VERSION: '2'
+   steps:
+     - uses: actions/checkout@v2
+     - uses: extdn/github-actions-m2/magento-unit-tests/7.4@master
+       with:
+         magento_pre_install_script: './.github/scripts/unit-tests-setup.sh'
+       env:
+         MAGENTO_VERSION: '2.4.3-p2'
+     - uses: extdn/github-actions-m2/magento-unit-tests/8.1@master
+       with:
+         magento_pre_install_script: './.github/scripts/unit-tests-setup.sh'
+       env:
+         MAGENTO_VERSION: '2.4.4'
