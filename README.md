@@ -96,6 +96,8 @@ The process of creating a widget is nearly the same for each widget type. You ca
       
     - **product-widget-installments**  
       *Or $34/month for 36 months. Learn More*
+   
+    - **default-template** 
       
     - **textual**  
       *Pay as low as $45.99 a month. Buy with ChargeAfter*

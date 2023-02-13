@@ -31,6 +31,9 @@
                     <option name="product-widget-installments" value="product-widget-installments">
                         <label>product-widget-installments</label>
                     </option>
+                    <option name="default-template" value="default-template">
+                        <label>default-template</label>
+                    </option>
                     <option name="textual" value="textual">
                         <label>textual</label>
                     </option>
@@ -42,7 +45,7 @@
                     </option>
                 </options>
             </parameter>
-            <parameter name="financing-page-url" xsi:type="text" visible="true" sort_order="40">
+            <parameter name="financing_page_url" xsi:type="text" visible="true" sort_order="40">
                 <label translate="true">Financing page url</label>
             </parameter>
             <parameter name="mode" xsi:type="select" visible="true" required="true" sort_order="60">
