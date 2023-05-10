@@ -97,5 +97,4 @@ class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
 
         return $quoteItemData;
     }
-
 }

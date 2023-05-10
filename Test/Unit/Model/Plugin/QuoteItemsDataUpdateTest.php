@@ -54,26 +54,15 @@ class QuoteItemsDataUpdateTest extends TestCase
 
         $this->checkoutSessionMock->expects($this->once())->method('getQuote')->willReturn($quoteMock);
 
-        $quoteItems = [];
-
-        for ($i = 0; $i <= sizeof($data) - 1; $i++) {
-            $productMock = $this->createMock(Product::class);
-            $productMock->expects($this->once())->method('getId')->willReturn($i);
-            $productMock->expects($this->once())->method('getDataByKey')
-                        ->with('chargeafter_non_leasable')
-                        ->willReturn($data[$i]['attribute']['chargeafter_non_leasable']);
-
-            $quoteItemMock = $this->createMock(Quote\Item::class);
-            $quoteItemMock->expects($this->any())->method('getProduct')->willReturn($productMock);
-            $quoteItemMock->expects($this->any())->method('getItemId')->willReturn($data[$i]['item_id']);
-
-            $quoteItems[$i] = $quoteItemMock;
-        }
+        $quoteItems = [
+            $this->createQuoteItemMock($data, 0),
+            $this->createQuoteItemMock($data, 1),
+            $this->createQuoteItemMock($data, 2),
+        ];
 
         $this->productRepositoryMock->expects($this->exactly(3))
              ->method('getById')
              ->willReturnCallback(function ($id) use ($quoteItems) {
-                 $test = $quoteItems[$id]->getProduct();
                  return $quoteItems[$id]->getProduct();
              });
 
@@ -82,6 +71,23 @@ class QuoteItemsDataUpdateTest extends TestCase
         $result = $this->plugin->afterGetConfig($this->subjectMock, ['quoteItemData' => $data]);
 
         $this->assertEquals($expected, $result);
+    }
+
+    private function createQuoteItemMock($data, $index)
+    {
+        $data = $data[$index];
+
+        $productMock = $this->createMock(Product::class);
+        $productMock->expects($this->once())->method('getId')->willReturn($index);
+        $productMock->expects($this->once())->method('getDataByKey')
+            ->with('chargeafter_non_leasable')
+            ->willReturn($data['attribute']['chargeafter_non_leasable']);
+
+        $quoteItemMock = $this->createMock(Quote\Item::class);
+        $quoteItemMock->expects($this->any())->method('getProduct')->willReturn($productMock);
+        $quoteItemMock->expects($this->any())->method('getItemId')->willReturn($data['item_id']);
+
+        return $quoteItemMock;
     }
 
     /**
