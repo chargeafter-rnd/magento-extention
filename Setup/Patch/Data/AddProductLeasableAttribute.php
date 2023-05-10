@@ -51,7 +51,6 @@ class AddProductLeasableAttribute implements DataPatchInterface, PatchVersionInt
     }
 
     /**
-     * {@inheritdoc}
      * @return void
      * @throws LocalizedException
      * @throws \Zend_Validate_Exception
