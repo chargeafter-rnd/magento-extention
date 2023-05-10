@@ -21,12 +21,10 @@
                     visible: isRadioButtonVisible()" />
         <label class="label" data-bind="attr: {'for': getCode()}">
             <span text="getTitle()"></span>
-            <!-- ko if: getConfig('logo') -->
+
             <!-- Chargeafter Logo -->
-            <img data-bind="attr: {src: getConfig('logo'), alt: $t('Logo'), title: $t('Logo')}"
-                 class="payment-icon"/>
+            <span class="ca-checkout-button payment-icon" data-button-type="medium-generic"></span>
             <!-- Chargeafter Logo -->
-            <!-- /ko -->
         </label>
     </div>
     <div class="payment-method-content">

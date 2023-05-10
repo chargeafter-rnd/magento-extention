@@ -51,8 +51,6 @@ class ConfigProvider implements ConfigProviderInterface
             'payment'=>[
                 self::CODE=>[
                     'description'=>$this->_method->getConfigData('description'),
-                    'logo'=> ($logo = $this->_method->getConfigData('logo'))
-                                ? $this->_helper->getCdnUrl() . "/assets/brands/{$logo}/button.svg" : null,
                     'cdnUrl' => $this->_helper->getCdnUrl(),
                     'publicKey' => $this->_helper->getPublicKey()
                 ]

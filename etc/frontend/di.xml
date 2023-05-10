@@ -24,4 +24,14 @@
             <argument name="method" xsi:type="object">ChargeafterPaymentFacade</argument>
         </arguments>
     </type>
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="ChargeafterConfigProvider" type="Chargeafter\Payment\Model\Plugin\QuoteItemsDataUpdate" />
+    </type>
+    <type name="Chargeafter\Payment\Model\Plugin\QuoteItemsDataUpdate">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="quoteRepository" xsi:type="object">Magento\Quote\Model\QuoteRepository\Proxy</argument>
+            <argument name="productRepository" xsi:type="object">Magento\Catalog\Model\ProductRepository\Proxy</argument>
+        </arguments>
+    </type>
 </config>

@@ -19,12 +19,19 @@ use Magento\Widget\Block\BlockInterface;
 
 class PromotionalWidgetBlock extends Template implements BlockInterface
 {
+    /**
+     * @var string
+     */
     protected $_template = "widget.phtml";
+
     /**
      * @var CurrentProductRegistry
      */
     private $currentProductRegistry;
 
+    /**
+     * @var ApiHelper
+     */
     protected $_helper;
 
     /**
