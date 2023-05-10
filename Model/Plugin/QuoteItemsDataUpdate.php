@@ -51,6 +51,7 @@ class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
      * @return array
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetConfig(\Magento\Checkout\Model\DefaultConfigProvider $subject, array $result)
     {
