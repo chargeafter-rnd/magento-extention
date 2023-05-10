@@ -24,15 +24,15 @@
 </script>
 <?php
 $widget_type = $block->getData('type');
-$product_widgets = ['product-widget','product-widget-line-of-credit','product-widget-installments','default-template'];
-if (in_array($widget_type, $product_widgets) && !$product = $block->getProduct()) {
+if (in_array($widget_type, ['product-widget','product-widget-line-of-credit','product-widget-installments','default-template'])
+    && !$product = $block->getProduct()) {
     $widget_type = '';
 }
 
 $output = "<div class=\"ca-promotional-widget\"";
 $output .= " data-widget-type=\"$widget_type\"";
 $output .= " data-widget-mode=\"{$block->getData('mode')}\"";
-if (in_array($widget_type, $product_widgets)) {
+if (in_array($widget_type, ['product-widget','product-widget-line-of-credit','product-widget-installments','default-template'])) {
     $output .= " data-widget-item-sku=\"{$product->getSku()}\" data-widget-item-price=\"{$product->getFinalPrice()}\"";
 }
 if ($block->getData('financing_page_url')) {

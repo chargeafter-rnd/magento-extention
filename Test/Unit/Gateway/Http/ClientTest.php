@@ -12,11 +12,11 @@
 namespace Chargeafter\Payment\Test\Unit\Gateway\Http;
 
 use Chargeafter\Payment\Gateway\Http\Client;
+use Laminas\Http\Response;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use PHPUnit\Framework\TestCase;
-use Zend_Http_Response;
 
 class ClientTest extends TestCase
 {
@@ -67,7 +67,7 @@ class ClientTest extends TestCase
             ->method('setRawData')
             ->with(json_encode($requestBody), 'application/json')
             ->willReturnSelf();
-        $response = $this->createMock(Zend_Http_Response::class);
+        $response = $this->createMock(Response::class);
         $response->expects($this->once())
             ->method('getBody')
             ->willReturn($responseBody);

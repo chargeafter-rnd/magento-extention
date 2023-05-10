@@ -21,19 +21,16 @@ use ReflectionException;
 class ConfigProviderTest extends TestCase
 {
     /**
-     * @param $logo
      * @param $expected
-     * @throws ReflectionException
      * @dataProvider dataProvider
      */
-    public function testGetConfig($logo, $expected)
+    public function testGetConfig($expected)
     {
         $method = $this->createMock(MethodInterface::class);
-        $method->expects($this->exactly(2))
+        $method->expects($this->once())
             ->method('getConfigData')
             ->willReturnMap([
                 ['description',null,'description'],
-                ['logo',null,$logo]
             ]);
 
         $helper = $this->createMock(ApiHelper::class);
@@ -54,12 +51,10 @@ class ConfigProviderTest extends TestCase
     {
         return[
             [
-                'logo'=>'logo',
                 'expected'=>[
                     'payment'=>[
                         'chargeafter'=>[
                             'description'=>'description',
-                            'logo'=> "cdnUrl/assets/brands/logo/button.svg",
                             'cdnUrl' => 'cdnUrl',
                             'publicKey' => 'publicKey'
                         ]
@@ -67,12 +62,10 @@ class ConfigProviderTest extends TestCase
                 ]
             ],
             [
-                'logo'=>null,
                 'expected'=>[
                     'payment'=>[
                         'chargeafter'=>[
                             'description'=>'description',
-                            'logo'=> null,
                             'cdnUrl' => 'cdnUrl',
                             'publicKey' => 'publicKey'
                         ]

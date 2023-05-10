@@ -41,6 +41,7 @@ class PaymentMethodIsActive implements ObserverInterface
         if ($methodInstance->getCode() === 'chargeafter') {
             $quote = $observer->getData('quote');
             $storeId = $quote ? $quote->getStoreId() : null;
+
             if (!($this->_apiHelper->getPublicKey($storeId) && $this->_apiHelper->getPrivateKey($storeId))) {
                 $result = $observer->getData('result');
                 $result->setData('is_available', false);

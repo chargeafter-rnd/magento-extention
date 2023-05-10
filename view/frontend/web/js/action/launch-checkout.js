@@ -71,13 +71,7 @@ define([
             price: parseFloat(item.price),
             sku: item.sku,
             quantity: item.qty,
-            //leasable: true,
-            //productCategory: "Product category",
-            /*warranty: {
-                name: "Awesome Warranty",
-                price: 100.0,
-                sku: "AWSMWRNTY"
-            }*/
+            leasable: item.ca_is_leasable
         }));
 
         const options =  {

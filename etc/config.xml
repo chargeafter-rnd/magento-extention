@@ -17,7 +17,6 @@
                 <active>0</active>
                 <title>Chargeafter payment</title>
                 <description><![CDATA[ Your description goes here ]]></description>
-                <logo>chargeafter</logo>
                 <allowspecific>0</allowspecific>
                 <environment>sandbox</environment>
                 <model>ChargeafterPaymentFacade</model>
