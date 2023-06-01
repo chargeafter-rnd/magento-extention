@@ -24,16 +24,12 @@ class VoidHandlerTest extends TestCase
      */
     public function testHandle()
     {
-        $response = [
-            'result' => [
-                'id'=> '1234567'
-            ],
-        ];
+        $response = [ 'id'=> '1234567' ];
 
         $paymentMock = $this->createMock(Payment::class);
         $paymentMock->expects($this->once())
             ->method('setTransactionId')
-            ->with($this->equalTo($response['result']['id']));
+            ->with($this->equalTo($response['id']));
         $paymentDoMock = $this->createMock(PaymentDataObjectInterface::class);
         $paymentDoMock->expects($this->once())
             ->method('getPayment')

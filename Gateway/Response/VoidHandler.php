@@ -22,6 +22,6 @@ class VoidHandler implements HandlerInterface
     public function handle(array $handlingSubject, array $response)
     {
         $payment = $handlingSubject['payment']->getPayment();
-        $payment->setTransactionId($response['result']['id']);
+        $payment->setTransactionId($response['id']);
     }
 }
