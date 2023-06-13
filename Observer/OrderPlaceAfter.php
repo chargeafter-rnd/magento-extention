@@ -9,7 +9,7 @@ use Magento\Sales\Model\Spi\OrderResourceInterface;
 
 class OrderPlaceAfter implements ObserverInterface
 {
-    private OrderResourceInterface $orderResource;
+    private $orderResource;
 
     public function __construct(OrderResourceInterface $orderResource)
     {
