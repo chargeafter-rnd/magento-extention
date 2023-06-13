@@ -32,7 +32,7 @@ class OrderPlaceAfter implements ObserverInterface
                 $orderTotal = $order->getTotalDue();
 
                 if ($chargeId && $chargeTotal && ($chargeTotal < $orderTotal)) {
-                    $diffTotal = round($orderTotal - $chargeTotal,2);
+                    $diffTotal = round($orderTotal - $chargeTotal, 2);
                     if ($order->getTaxAmount() == $diffTotal) {
                         $order->setBaseTaxAmount(0)
                               ->setTaxAmount(0)
