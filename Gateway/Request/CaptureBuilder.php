@@ -23,11 +23,12 @@ class CaptureBuilder implements BuilderInterface
     {
         $payment = $buildSubject['payment']->getPayment();
         $order = $buildSubject['payment']->getOrder();
+
         return [
-            'storeId'=>$order->getStoreId(),
-            'chargeId'=>$payment->getAdditionalInformation('chargeId'),
-            'payload'=>[
-                'amount'=>(float)$buildSubject['amount'],
+            'storeId' => $order->getStoreId(),
+            'chargeId' => $payment->getAdditionalInformation('chargeId'),
+            'payload' => [
+                'amount' => (float)$buildSubject['amount'],
             ],
         ];
     }
