@@ -15,15 +15,17 @@ use Magento\Payment\Gateway\Response\HandlerInterface;
 
 class AuthoriseHandler implements HandlerInterface
 {
-
     /**
      * @inheritDoc
      */
     public function handle(array $handlingSubject, array $response)
     {
         $payment = $handlingSubject['payment']->getPayment();
+
         $payment->setAdditionalInformation('lender', $response['offer']['lender']['name']);
         $payment->setAdditionalInformation('chargeId', $response['id']);
+        $payment->setAdditionalInformation('chargeTotalAmount', $response['totalAmount']);
+
         $payment->setTransactionId($response['id']);
         $payment->setIsTransactionClosed(false);
     }

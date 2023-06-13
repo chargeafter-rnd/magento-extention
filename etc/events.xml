@@ -17,4 +17,7 @@
     <event name="payment_method_assign_data_chargeafter">
         <observer name="chargeafter_gateway_data_assign" instance="Chargeafter\Payment\Observer\DataAssignObserver" />
     </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="chargeafter_gateway_order_place" instance="Chargeafter\Payment\Observer\OrderPlaceAfter" />
+    </event>
 </config>

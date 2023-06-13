@@ -25,10 +25,10 @@ class AuthorizeBuilder implements BuilderInterface
         $order = $buildSubject['payment']->getOrder();
 
         return [
-            'storeId'=>$order->getStoreId(),
-            'payload'=>[
-                'confirmationToken'=>$payment->getAdditionalInformation('token'),
-                'merchantOrderId'=>$order->getOrderIncrementId(),
+            'storeId' => $order->getStoreId(),
+            'payload' => [
+                'confirmationToken' => $payment->getAdditionalInformation('token'),
+                'merchantOrderId' => $order->getOrderIncrementId(),
             ],
         ];
     }
