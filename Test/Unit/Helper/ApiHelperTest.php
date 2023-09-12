@@ -33,16 +33,16 @@ class ApiHelperTest extends TestCase
     /**
      * @param string $environment
      * @param bool $expected
-     * @dataProvider  dataProviderTestGetSandboxMode
+     * @dataProvider  dataProviderTestIsSandboxMode
      */
-    public function testGetSandboxMode(string $environment, bool $expected)
+    public function testIsSandboxMode(string $environment, bool $expected)
     {
         $this->config->expects($this->once())
             ->method('getValue')
             ->with('environment')
             ->willReturn($environment);
 
-        $actual = $this->helper->getSandboxMode(null);
+        $actual = $this->helper->isSandboxMode(null);
 
         self::assertSame($expected, $actual);
     }
@@ -50,7 +50,7 @@ class ApiHelperTest extends TestCase
     /**
      * @return array[]
      */
-    public function dataProviderTestGetSandboxMode()
+    public function dataProviderTestIsSandboxMode()
     {
         return[
             [

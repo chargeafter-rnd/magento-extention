@@ -40,7 +40,7 @@ class ApiHelper
      * @param $storeId
      * @return bool
      */
-    public function getSandboxMode($storeId = null): bool
+    public function isSandboxMode($storeId = null): bool
     {
         return $this->_config->getValue('environment', $storeId) === EnvironmentInterface::ENVIRONMENT_SANDBOX;
     }
@@ -51,7 +51,7 @@ class ApiHelper
      */
     public function getCdnUrl($storeId = null): string
     {
-        return $this->getSandboxMode($storeId) ? self::SANDBOX_CDN_URL : self::PRODUCTION_CDN_URL;
+        return $this->isSandboxMode($storeId) ? self::SANDBOX_CDN_URL : self::PRODUCTION_CDN_URL;
     }
 
     /**
@@ -63,7 +63,7 @@ class ApiHelper
     public function getApiUrl($urn = null, $storeId = null, bool $withoutApiVersion = false): string
     {
         $apiVersion = !$withoutApiVersion ? self::API_VERSION : '';
-        return ( $this->getSandboxMode($storeId) ? self::SANDBOX_API_URL : self::PRODUCTION_API_URL )
+        return ( $this->isSandboxMode($storeId) ? self::SANDBOX_API_URL : self::PRODUCTION_API_URL )
             . $apiVersion . $urn;
     }
 
@@ -73,7 +73,7 @@ class ApiHelper
      */
     public function getPublicKey($storeId = null)
     {
-        $value = $this->getSandboxMode($storeId)
+        $value = $this->isSandboxMode($storeId)
             ? $this->_config->getValue('sandbox_public_key', $storeId)
             : $this->_config->getValue('production_public_key', $storeId);
 
@@ -86,7 +86,7 @@ class ApiHelper
      */
     public function getPrivateKey($storeId = null)
     {
-        $value = $this->getSandboxMode($storeId)
+        $value = $this->isSandboxMode($storeId)
             ? $this->_config->getValue('sandbox_private_key', $storeId)
             : $this->_config->getValue('production_private_key', $storeId);
 
