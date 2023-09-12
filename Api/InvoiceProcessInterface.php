@@ -14,7 +14,7 @@ interface InvoiceProcessInterface
      *
      * @param OrderPaymentInterface $payment
      *
-     * @return mixed
+     * @return void
      */
     public function invoice(OrderPaymentInterface $payment);
 }

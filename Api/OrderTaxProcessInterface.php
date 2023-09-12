@@ -14,7 +14,7 @@ interface OrderTaxProcessInterface
      * Re-calculate tax for LTO
      *
      * @param OrderPaymentInterface $payment
-     * @return mixed
+     * @return void
      */
     public function reCalculate(OrderPaymentInterface $payment);
 }
