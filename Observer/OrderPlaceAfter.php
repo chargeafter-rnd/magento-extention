@@ -63,7 +63,7 @@ class OrderPlaceAfter implements ObserverInterface
                 $storeId = $quote ? $quote->getStoreId() : null;
                 $transactionType = $this->apiHelper->getTransactionType($storeId);
 
-                if($transactionType === TransactionTypeInterface::TRANSACTION_TYPE_CAPTURE) {
+                if ($transactionType === TransactionTypeInterface::TRANSACTION_TYPE_CAPTURE) {
                     // Auto-capture
                     $invoiceProcess = $this->invoiceProcessFactory->create();
                     $invoiceProcess->invoice($payment);
