@@ -18,6 +18,7 @@
                 <title>Chargeafter payment</title>
                 <description><![CDATA[ Your description goes here ]]></description>
                 <allowspecific>0</allowspecific>
+                <transaction_type>authorization</transaction_type>
                 <environment>sandbox</environment>
                 <model>ChargeafterPaymentFacade</model>
                 <can_use_checkout>1</can_use_checkout>
