@@ -30,12 +30,14 @@ class AuthoriseHandlerTest extends TestCase
                 'lender'=>[
                     'name'=>'lender_name'
                 ]
-            ]
+            ],
+            'totalAmount' => 200
         ];
         $paymentMock = $this->createMock(Payment::class);
         $additionalInformation = [
             [$this->equalTo('lender'),$this->equalTo($response['offer']['lender']['name'])],
-            [$this->equalTo('chargeId'),$this->equalTo($response['id'])]
+            [$this->equalTo('chargeId'),$this->equalTo($response['id'])],
+            [$this->equalTo('chargeTotalAmount'),$this->equalTo($response['totalAmount'])]
         ];
         $paymentMock->expects($this->exactly(count($additionalInformation)))
             ->method('setAdditionalInformation')

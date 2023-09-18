@@ -32,6 +32,40 @@ class ApiHelperTest extends TestCase
 
     /**
      * @param string $environment
+     * @param bool $expected
+     * @dataProvider  dataProviderTestIsSandboxMode
+     */
+    public function testIsSandboxMode(string $environment, bool $expected)
+    {
+        $this->config->expects($this->once())
+            ->method('getValue')
+            ->with('environment')
+            ->willReturn($environment);
+
+        $actual = $this->helper->isSandboxMode(null);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function dataProviderTestIsSandboxMode()
+    {
+        return[
+            [
+                'environment' => 'sandbox',
+                'expected' => true
+            ],
+            [
+                'environment' => 'production',
+                'expected' => false
+            ]
+        ];
+    }
+
+    /**
+     * @param string $environment
      * @param string $expected
      * @dataProvider dataProviderTestGetApiUrl
      */
@@ -193,6 +227,40 @@ class ApiHelperTest extends TestCase
             [
                 'environment'=>'production',
                 'expected'=>'production_public_key'
+            ]
+        ];
+    }
+
+    /**
+     * @param string $transactionType
+     * @param string $expected
+     * @dataProvider  dataProviderTestGetTransactionType
+     */
+    public function testGetTransactionType(string $transactionType, string $expected)
+    {
+        $this->config->expects($this->once())
+            ->method('getValue')
+            ->with('transaction_type')
+            ->willReturn($transactionType);
+
+        $actual = $this->helper->getTransactionType(null);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function dataProviderTestGetTransactionType()
+    {
+        return[
+            [
+                'environment' => 'authorization',
+                'expected' => 'authorization'
+            ],
+            [
+                'environment' => 'capture',
+                'expected' => 'capture'
             ]
         ];
     }

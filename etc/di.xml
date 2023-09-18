@@ -109,4 +109,8 @@
             <argument name="config" xsi:type="object">ChargeafterPaymentConfig</argument>
         </arguments>
     </virtualType>
+    <preference for="Chargeafter\Payment\Api\OrderTaxProcessInterface"
+                type="Chargeafter\Payment\Model\Plugin\OrderTaxProcess" />
+    <preference for="Chargeafter\Payment\Api\InvoiceProcessInterface"
+                type="Chargeafter\Payment\Model\Plugin\InvoiceProcess" />
 </config>

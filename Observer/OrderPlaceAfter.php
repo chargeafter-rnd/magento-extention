@@ -2,49 +2,71 @@
 
 namespace Chargeafter\Payment\Observer;
 
+use Chargeafter\Payment\Api\TransactionTypeInterface;
+use Chargeafter\Payment\Helper\ApiHelper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
-use Magento\Sales\Model\Spi\OrderResourceInterface;
+use Chargeafter\Payment\Api\OrderTaxProcessInterfaceFactory;
+use Chargeafter\Payment\Api\InvoiceProcessInterfaceFactory;
 
 class OrderPlaceAfter implements ObserverInterface
 {
-    private $orderResource;
+    /**
+     * @var OrderTaxProcessInterfaceFactory
+     */
+    private $orderTaxProcessInterfaceFactory;
 
-    public function __construct(OrderResourceInterface $orderResource)
-    {
-        $this->orderResource = $orderResource;
+    /**
+     * @var InvoiceProcessInterfaceFactory
+     */
+    private $invoiceProcessFactory;
+
+    /**
+     * @var ApiHelper
+     */
+    private $apiHelper;
+
+    /**
+     * OrderPlaceAfter constructor.
+     * @param OrderTaxProcessInterfaceFactory $orderTaxProcessInterfaceFactory
+     * @param InvoiceProcessInterfaceFactory $invoiceProcessFactory
+     * @param ApiHelper $apiHelper
+     */
+    public function __construct(
+        OrderTaxProcessInterfaceFactory $orderTaxProcessInterfaceFactory,
+        InvoiceProcessInterfaceFactory $invoiceProcessFactory,
+        ApiHelper $apiHelper
+    ) {
+        $this->orderTaxProcessInterfaceFactory = $orderTaxProcessInterfaceFactory;
+        $this->invoiceProcessFactory = $invoiceProcessFactory;
+        $this->apiHelper = $apiHelper;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute(Observer $observer)
     {
         /** @var Order $order */
         $order = $observer->getEvent()->getOrder();
 
         if ($order->getId()) {
-
             $payment = $order->getPayment();
+
             if ($payment->getMethod() === 'chargeafter') {
+                // Tax re-calculation
+                $orderTaxProcess = $this->orderTaxProcessInterfaceFactory->create();
+                $orderTaxProcess->reCalculate($payment);
 
-                $chargeId = $payment->getAdditionalInformation('chargeId');
+                $quote = $observer->getData('quote');
+                $storeId = $quote ? $quote->getStoreId() : null;
+                $transactionType = $this->apiHelper->getTransactionType($storeId);
 
-                $chargeTotal = (float) $payment->getAdditionalInformation('chargeTotalAmount');
-                $orderTotal = $order->getTotalDue();
-
-                if ($chargeId && $chargeTotal && ($chargeTotal < $orderTotal)) {
-                    $diffTotal = round($orderTotal - $chargeTotal, 2);
-                    if ($order->getTaxAmount() == $diffTotal) {
-                        $order->setBaseTaxAmount(0)
-                              ->setTaxAmount(0)
-                              ->setBaseGrandTotal($chargeTotal)
-                              ->setGrandTotal($chargeTotal);
-
-                        $order->addCommentToStatusHistory(
-                            "Updated tax status as tax-free online. Transaction ID: \"{$chargeId}\""
-                        );
-
-                        $this->orderResource->save($order);
-                    }
+                if ($transactionType === TransactionTypeInterface::TRANSACTION_TYPE_CAPTURE) {
+                    // Auto-capture
+                    $invoiceProcess = $this->invoiceProcessFactory->create();
+                    $invoiceProcess->invoice($payment);
                 }
             }
         }

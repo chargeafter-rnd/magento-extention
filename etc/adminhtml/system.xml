@@ -92,6 +92,20 @@
                             <field id="allowspecific">1</field>
                         </depends>
                     </field>
+                    <field id="transaction_type"
+                           type="select"
+                           translate="label"
+                           showInDefault="1"
+                           showInStore="1"
+                           showInWebsite="1"
+                           canRestore="1"
+                           sortOrder="130">
+                        <label>Transaction Type</label>
+                        <config_path>payment/chargeafter/transaction_type</config_path>
+                        <source_model>Chargeafter\Payment\Model\Config\Source\TransactionType</source_model>
+                        <frontend_class>chargeafter-transaction-type-select</frontend_class>
+                        <comment>Set to capture enabling auto capture at the end of checkout experience.</comment>
+                    </field>
                     <field id="sort_order"
                            type="text"
                            translate="label"
