@@ -35,21 +35,22 @@ Your Magento 2.x extensions can be installed in a few minutes by going through t
 3. All installed payment methods will appears in this section.
 4. Click on OTHER PAYMENT METHODS section and click "Configure" button and update the following configurations.  
 
-|Settings                          |Description                                                                                                                                          |Default                     |
-|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-|**Base Settings**                 |                                                                                                                                                     |                            |
-|Enable this Solution              |Once you completed the configuration, Enable Charge After as a payment method. If it is set to ‘yes’, it will appear on Checkout Page.               |No                          |
-|Title                             |The payment method title that you will see in your checkout page.                                                                                    |'Chargeafter payment'       |
-|Description                       |The payment method description that appears in the checkout below the payment method title.                                                          |'Your description goes here'|
-|Payment from applicable countries |Restrict the payment method to specific countries.                                                                                                   |All Allowed Countries       |
-| Transaction Type                 | Set to capture enabling auto capture at the end of checkout experience. Otherwise, the transaction is authorized only and it requires manual capture operation later. | Authorization |
-|Sort Order                        |The order in which this payment method is displayed in the list of payment methods in the checkout. To change order, enter any number greater than 0.|Empty                       |
-|**API Settings**                  |                                                                                                                                                     |                            |
-|Mode/Environment                  |This is the environment that you are using. If you are in testing mode, use ‘Sandbox’ and if in live mode use ‘Production’.                          |Sandbox                     |
-|Production Private API Key|Your private production key. Provided by ChargeAfter.                                                                                                        |Empty                       |
-|Production Public API Key|Your public production key. Provided by ChargeAfter.                                                                                                          |Empty                       |
-|Sandbox Private API Key|Your private sandbox key. Provided by ChargeAfter.                                                                                                              |Empty                       |
-|Sandbox Public API Key|Your public sandbox key. Provided by ChargeAfter.                                                                                                                |Empty                       |
+| Settings                          | Description                                                                                                                                                           | Default                      |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
+| **Base Settings**                 |                                                                                                                                                                       |                              |
+| Enable this Solution              | Once you completed the configuration, Enable Charge After as a payment method. If it is set to ‘yes’, it will appear on Checkout Page.                                | No                           |
+| Title                             | The payment method title that you will see in your checkout page.                                                                                                     | 'Chargeafter payment'        |
+| Description                       | The payment method description that appears in the checkout below the payment method title.                                                                           | 'Your description goes here' |
+| Payment from applicable countries | Restrict the payment method to specific countries.                                                                                                                    | All Allowed Countries        |
+| Transaction Type                  | Set to capture enabling auto capture at the end of checkout experience. Otherwise, the transaction is authorized only and it requires manual capture operation later. | Authorization                |
+| Shipping address equals billing   | If set to yes, customers will not have billing address option for a payment method and always use a shipping address as a billing.                                    | No                           |
+| Sort Order                        | The order in which this payment method is displayed in the list of payment methods in the checkout. To change order, enter any number greater than 0.                 | Empty                        |
+| **API Settings**                  |                                                                                                                                                                       |                              |
+| Mode/Environment                  | This is the environment that you are using. If you are in testing mode, use ‘Sandbox’ and if in live mode use ‘Production’.                                           | Sandbox                      |
+| Production Private API Key        | Your private production key. Provided by ChargeAfter.                                                                                                                 | Empty                        |
+| Production Public API Key         | Your public production key. Provided by ChargeAfter.                                                                                                                  | Empty                        |
+| Sandbox Private API Key           | Your private sandbox key. Provided by ChargeAfter.                                                                                                                    | Empty                        |
+| Sandbox Public API Key            | Your public sandbox key. Provided by ChargeAfter.                                                                                                                     | Empty                        |
 ![img.png](README/img.png)
 
 ## Creating a Widget

@@ -264,4 +264,42 @@ class ApiHelperTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @param int|null $shippingEqualsBilling
+     * @param bool $expected
+     * @dataProvider  dataProviderTestIsShippingEqualsBilling
+     */
+    public function testIsShippingEqualsBilling($shippingEqualsBilling, bool $expected)
+    {
+        $this->config->expects($this->once())
+            ->method('getValue')
+            ->with('bill_to_equal_ship_to')
+            ->willReturn($shippingEqualsBilling);
+
+        $actual = $this->helper->isShippingEqualsBilling(null);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function dataProviderTestIsShippingEqualsBilling()
+    {
+        return[
+            [
+                'bill_to_equal_ship_to' => 0,
+                'expected' => false
+            ],
+            [
+                'bill_to_equal_ship_to' => 1,
+                'expected' => true
+            ],
+            [
+                'bill_to_equal_ship_to' => null,
+                'expected' => false
+            ]
+        ];
+    }
 }
