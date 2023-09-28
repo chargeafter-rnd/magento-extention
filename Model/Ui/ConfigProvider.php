@@ -52,7 +52,8 @@ class ConfigProvider implements ConfigProviderInterface
                 self::CODE=>[
                     'description'=>$this->_method->getConfigData('description'),
                     'cdnUrl' => $this->_helper->getCdnUrl(),
-                    'publicKey' => $this->_helper->getPublicKey()
+                    'publicKey' => $this->_helper->getPublicKey(),
+                    'isSameCustomerBillingAddress' => $this->_helper->isShippingEqualsBilling()
                 ]
             ]
         ];

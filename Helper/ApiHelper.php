@@ -101,4 +101,13 @@ class ApiHelper
     {
         return $this->_config->getValue('transaction_type', $storeId);
     }
+
+    /**
+     * @param $storeId
+     * @return boolean
+     */
+    public function isShippingEqualsBilling($storeId = null)
+    {
+        return (bool)$this->_config->getValue('bill_to_equal_ship_to', $storeId);
+    }
 }

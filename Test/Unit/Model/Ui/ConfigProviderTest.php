@@ -21,25 +21,32 @@ use ReflectionException;
 class ConfigProviderTest extends TestCase
 {
     /**
+     * @param $description
+     * @param $cdnUrl
+     * @param $publicKey
+     * @param $shippingEqualsBilling
      * @param $expected
      * @dataProvider dataProvider
      */
-    public function testGetConfig($expected)
+    public function testGetConfig($description, $cdnUrl, $publicKey, $shippingEqualsBilling, $expected)
     {
         $method = $this->createMock(MethodInterface::class);
         $method->expects($this->once())
             ->method('getConfigData')
             ->willReturnMap([
-                ['description',null,'description'],
+                ['description', null, $description],
             ]);
 
         $helper = $this->createMock(ApiHelper::class);
         $helper->expects($this->any())
             ->method('getCdnUrl')
-            ->willReturn('cdnUrl');
+            ->willReturn($cdnUrl);
         $helper->expects($this->once())
             ->method('getPublicKey')
-            ->willReturn('publicKey');
+            ->willReturn($publicKey);
+        $helper->expects($this->once())
+            ->method('isShippingEqualsBilling')
+            ->willReturn($shippingEqualsBilling);
 
         $configProvider = new ConfigProvider($method, $helper);
         $actual = $configProvider->getConfig();
@@ -49,25 +56,35 @@ class ConfigProviderTest extends TestCase
 
     public function dataProvider(): array
     {
-        return[
+        return [
             [
-                'expected'=>[
-                    'payment'=>[
-                        'chargeafter'=>[
-                            'description'=>'description',
+                'description' => 'description',
+                'cdn_url' => 'cdnUrl',
+                'public_key' => 'publicKey',
+                'bill_to_equal_ship_to' => true,
+                'expected' => [
+                    'payment' => [
+                        'chargeafter' => [
+                            'description' => 'description',
                             'cdnUrl' => 'cdnUrl',
-                            'publicKey' => 'publicKey'
+                            'publicKey' => 'publicKey',
+                            'isSameCustomerBillingAddress' => true
                         ]
                     ]
                 ]
             ],
             [
-                'expected'=>[
-                    'payment'=>[
-                        'chargeafter'=>[
-                            'description'=>'description',
+                'description' => 'description',
+                'cdn_url' => 'cdnUrl',
+                'public_key' => 'publicKey',
+                'bill_to_equal_ship_to' => false,
+                'expected' => [
+                    'payment' => [
+                        'chargeafter' => [
+                            'description' => 'description',
                             'cdnUrl' => 'cdnUrl',
-                            'publicKey' => 'publicKey'
+                            'publicKey' => 'publicKey',
+                            'isSameCustomerBillingAddress' => false
                         ]
                     ]
                 ]

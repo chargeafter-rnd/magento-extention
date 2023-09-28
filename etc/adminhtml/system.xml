@@ -106,13 +106,27 @@
                         <frontend_class>chargeafter-transaction-type-select</frontend_class>
                         <comment>Set to capture enabling auto capture at the end of checkout experience.</comment>
                     </field>
+                    <field id="bill_to_equal_ship_to"
+                           translate="label"
+                           type="select"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           canRestore="1"
+                           sortOrder="140">
+                        <label>Billing address equals shipping</label>
+                        <config_path>payment/chargeafter/bill_to_equal_ship_to</config_path>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <frontend_class>chargeafter-transaction-type-select</frontend_class>
+                        <comment>If set to yes, customers will not have billing address option for a payment method and always use a shipping address as a billing.</comment>
+                    </field>
                     <field id="sort_order"
                            type="text"
                            translate="label"
                            showInDefault="1"
                            showInStore="1"
                            showInWebsite="1"
-                           sortOrder="140">
+                           sortOrder="150">
                         <label>Sort Order</label>
                         <config_path>payment/chargeafter/sort_order</config_path>
                         <frontend_class>validate-number</frontend_class>
