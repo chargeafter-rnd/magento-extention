@@ -9,6 +9,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 
+/**
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ */
 class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
 {
     /**
