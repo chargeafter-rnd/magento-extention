@@ -2,7 +2,7 @@
     "name": "chargeafter1/magento-extention",
     "description": "N/A",
     "type": "magento2-module",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "authors": [
         {
             "name": "Taras Lagan",
@@ -11,7 +11,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "7.0.2||7.0.4||~7.0.6||~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1",
+        "php": "7.0.2||7.0.4||~7.0.6||~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1||~8.2",
         "ext-json": "*",
         "magento/module-payment": ">=100.2 <101",
         "magento/module-checkout": ">=100.2 <101",

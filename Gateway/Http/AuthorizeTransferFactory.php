@@ -24,7 +24,8 @@ class AuthorizeTransferFactory extends TransferFactory
             ->setUri($this->_apiHelper->getApiUrl('/payment/charges', $request['storeId']))
             ->setMethod('POST')
             ->setHeaders([
-                'Authorization'=>'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId'])
+                'Authorization'=>'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId']),
+                'accept' => 'application/json'
             ])
             ->setBody($request['payload'])
             ->build();

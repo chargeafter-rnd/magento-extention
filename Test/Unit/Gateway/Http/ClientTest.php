@@ -13,8 +13,8 @@ namespace Chargeafter\Payment\Test\Unit\Gateway\Http;
 
 use Chargeafter\Payment\Gateway\Http\Client;
 use Laminas\Http\Response;
-use Magento\Framework\HTTP\ZendClient;
-use Magento\Framework\HTTP\ZendClientFactory;
+use Laminas\Http\Client as LaminasClient;
+use Laminas\Http\ClientFactory as LaminasClientFactory;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -43,37 +43,50 @@ class ClientTest extends TestCase
             ->method('getMethod')
             ->willReturn($method);
 
-        $zendClient = $this->createMock(ZendClient::class);
-        $clientFactory = $this->createMock(ZendClientFactory::class);
+        $httpClient = $this->createMock(LaminasClient::class);
+        $clientFactory = $this->createMock(LaminasClientFactory::class);
 
         $clientFactory->expects($this->once())
             ->method('create')
-            ->with(['uri'=>$url])
-            ->willReturnReference($zendClient);
+            ->willReturnReference($httpClient);
 
-        $zendClient->expects($this->once())
+        $httpClient->expects($this->once())
+            ->method('setUri')
+            ->with($url);
+
+        $httpClient->expects($this->once())
             ->method('setHeaders')
             ->with($headers)
             ->willReturnSelf();
 
-        $zendClient->expects($this->once())
+        $httpClient->expects($this->once())
             ->method('setMethod')
             ->with($method)
             ->willReturnSelf();
-        $transferObject->expects($method==='POST' ? $requestBody ? $this->exactly(2) : $this->once() : $this->never())
+
+        $transferObject->expects($method === 'POST' ? $requestBody ? $this->exactly(2) : $this->once() : $this->never())
             ->method('getBody')
             ->willReturn($requestBody);
-        $zendClient->expects($method==='POST' && $requestBody ? $this->once() : $this->never())
-            ->method('setRawData')
-            ->with(json_encode($requestBody), 'application/json')
+
+        $httpClient->expects($method === 'POST' && $requestBody ? $this->once() : $this->never())
+            ->method('setRawBody')
+            ->with(json_encode($requestBody))
             ->willReturnSelf();
+
+        if (key_exists('accept', $headers)) {
+            $httpClient->expects($this->once())
+                ->method('setEncType')
+                ->with($headers['accept'])
+                ->willReturnSelf();
+        }
+
         $response = $this->createMock(Response::class);
         $response->expects($this->once())
             ->method('getBody')
             ->willReturn($responseBody);
 
-        $zendClient->expects($this->once())
-            ->method('request')
+        $httpClient->expects($this->once())
+            ->method('send')
             ->willReturnReference($response);
 
         $client = new Client($clientFactory);
@@ -86,21 +99,32 @@ class ClientTest extends TestCase
         return [
             [
                 '/payment/charges',
-                ['Authorization'=>'Bearer privateKey'],
+                [
+                    'Authorization' => 'Bearer privateKey'
+                ],
                 'POST',
-                ['payload'=>'payload'],
+                [
+                    'payload' => 'payload'
+                ],
                 json_encode(['body']),
             ],
             [
                 '/payment/charges',
-                ['Authorization'=>'Bearer privateKey'],
+                [
+                    'Authorization' => 'Bearer privateKey',
+                    'accept' => 'application/json'
+                ],
                 'GET',
-                ['payload'=>'payload'],
+                [
+                    'payload' => 'payload'
+                ],
                 json_encode(['body']),
             ],
             [
                 '/payment/charges',
-                ['Authorization'=>'Bearer privateKey'],
+                [
+                    'Authorization' => 'Bearer privateKey'
+                ],
                 'POST',
                 null,
                 json_encode(['body']),

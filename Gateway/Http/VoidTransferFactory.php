@@ -24,7 +24,8 @@ class VoidTransferFactory extends TransferFactory
             ->setUri($this->_apiHelper->getApiUrl("/post-sale/charges/$request[chargeId]/voids", $request['storeId']))
             ->setMethod('POST')
             ->setHeaders([
-                'Authorization'=>'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId'])
+                'Authorization' => 'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId']),
+                'accept' => 'application/json'
             ])
             ->build();
     }

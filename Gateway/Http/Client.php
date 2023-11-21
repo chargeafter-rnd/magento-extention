@@ -12,7 +12,8 @@
 namespace Chargeafter\Payment\Gateway\Http;
 
 use Laminas\Http\Client\Exception\RuntimeException;
-use Magento\Framework\HTTP\ZendClientFactory;
+use Laminas\Http\Request;
+use Laminas\Http\ClientFactory as LaminasClientFactory;
 use Magento\Payment\Gateway\Http\ClientException;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
@@ -23,9 +24,9 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 class Client implements ClientInterface
 {
     /**
-     * @var ZendClientFactory
+     * @var LaminasClientFactory
      */
-    private $clientFactory;
+    private $httpClientFactory;
 
     /**
      * @var ConverterInterface | null
@@ -34,14 +35,14 @@ class Client implements ClientInterface
 
     /**
      * Client constructor.
-     * @param ZendClientFactory $clientFactory
+     * @param LaminasClientFactory $httpClientFactory
      * @param ConverterInterface|null $converter
      */
     public function __construct(
-        ZendClientFactory $clientFactory,
-        ConverterInterface $converter = null
+        LaminasClientFactory $httpClientFactory,
+        ConverterInterface   $converter = null
     ) {
-        $this->clientFactory = $clientFactory;
+        $this->httpClientFactory = $httpClientFactory;
         $this->converter = $converter;
     }
 
@@ -53,17 +54,23 @@ class Client implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject): array
     {
-        $client = $this->clientFactory
-                       ->create(['uri' => $transferObject->getUri()])
-                       ->setHeaders($transferObject->getHeaders())
-                       ->setMethod($transferObject->getMethod());
+        $client = $this->httpClientFactory->create();
+        $client->setUri($transferObject->getUri());
 
-        if ($transferObject->getMethod() === $client::POST && $transferObject->getBody()) {
-            $client->setRawData(json_encode($transferObject->getBody()), 'application/json');
+        $headers = $transferObject->getHeaders();
+        if ($headers && key_exists('accept', $headers)) {
+            $client->setEncType($headers['accept']);
         }
 
+        if ($transferObject->getMethod() === Request::METHOD_POST && $transferObject->getBody()) {
+            $client->setRawBody(json_encode($transferObject->getBody()));
+        }
+
+        $client->setHeaders($headers);
+        $client->setMethod($transferObject->getMethod());
+
         try {
-            $response = $client->request();
+            $response = $client->send();
 
             $result = $this->converter
                 ? $this->converter->convert($response->getBody())
