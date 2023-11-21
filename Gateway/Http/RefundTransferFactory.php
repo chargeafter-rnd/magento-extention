@@ -24,7 +24,8 @@ class RefundTransferFactory extends TransferFactory
             ->setUri($this->_apiHelper->getApiUrl("/post-sale/charges/$request[chargeId]/refunds", $request['storeId']))
             ->setMethod('POST')
             ->setHeaders([
-                'Authorization'=>'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId'])
+                'Authorization' => 'Bearer ' . $this->_apiHelper->getPrivateKey($request['storeId']),
+                'accept' => 'application/json'
             ])
             ->setBody($request['payload'])
             ->build();

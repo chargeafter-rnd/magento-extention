@@ -55,7 +55,8 @@ class AuthorizeTransferFactoryTest extends TestCase
             ->method('setHeaders')
             ->with(
                 [
-                    'Authorization'=>'Bearer ' . $privateKey
+                    'Authorization'=>'Bearer ' . $privateKey,
+                    'accept' => 'application/json'
                 ]
             )
             ->willReturnSelf();
