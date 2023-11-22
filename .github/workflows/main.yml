@@ -1,0 +1,119 @@
+name: M2 Coding Quality Check
+on:
+  push:
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  MODULE: Chargeafter_Payment
+  MODULE_DIR: 'app/code/Chargeafter/Payment'
+
+jobs:
+  magento2-build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [7.4, 8.1, 8.2]
+        magento: [2.3.7, 2.4.3, 2.4.5, 2.4.6]
+        exclude:
+          - php: 7.4
+            magento: 2.4.5
+          - php: 7.4
+            magento: 2.4.6
+          - php: 8.1
+            magento: 2.3.7
+          - php: 8.1
+            magento: 2.4.3
+          - php: 8.1
+            magento: 2.4.6
+          - php: 8.2
+            magento: 2.3.7
+          - php: 8.2
+            magento: 2.4.3
+          - php: 8.2
+            magento: 2.4.5
+    container: ubuntu
+    name: M2 tests & build | PHP ${{ matrix.php }} - Magento ${{ matrix.magento }}
+    services:
+      mysql:
+        image: docker://mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      opensearch:
+        image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.MODULE }}
+
+      - name: 'Install Magento 2 repo'
+        uses: MAD-I-T/magento-actions@v3.25
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        with:
+          php: ${{ matrix.php }}
+          process: 'install-magento'
+          magento_version: ${{ matrix.magento }}
+          no_push: 1
+
+      - name: 'Copy Module to Magento'
+        run: |
+          mkdir -p magento/${{ env.MODULE_DIR }} && cp -r ${{ env.MODULE }}/* magento/${{ env.MODULE_DIR }}
+
+      - name: 'Unit tests'
+        uses: MAD-I-T/magento-actions@v3.25
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        with:
+          php: ${{ matrix.php }}
+          process: 'unit-test'
+          unit_test_config: 'dev/tests/unit/phpunit.xml.dist'
+          unit_test_subset_path: '${{ env.MODULE_DIR }}/Test/Unit'
+
+      - name: 'Phpstan'
+        if: matrix.magento != '2.3.7' && matrix.magento != '2.4.3'
+        uses: MAD-I-T/magento-actions@v3.25
+        with:
+          php: ${{ matrix.php }}
+          process: 'phpstan'
+          exec_path: '../${{ env.MODULE }}/'
+
+      - name: 'Mess detector'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.25
+        with:
+          php: ${{ matrix.php }}
+          process: 'mess-detector'
+          md_src_path: '../${{ env.MODULE }}/'
+
+      - name: 'Coding standard checking'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.25
+        with:
+          php: ${{ matrix.php }}
+          process: 'phpcs-test'
+          extension: '${{ env.MODULE }}'
+          severity: 10
+          standard: 'Magento2'
+
+      - name: 'Security scan'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.25
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        with:
+          php: ${{ matrix.php }}
+          process: 'security-scan-modules'
