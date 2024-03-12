@@ -66,13 +66,25 @@ define([
             ];
         }
 
-        cartDetails.items = quote.getItems().map(item=>({
-            name: item.name,
-            price: parseFloat(item.price),
-            sku: item.sku,
-            quantity: item.qty,
-            leasable: item.ca_is_leasable
-        }));
+        cartDetails.items = quote.getItems().map(item=> {
+            var lineItem = {
+                name: item.name,
+                price: parseFloat(item.price),
+                sku: item.sku,
+                quantity: item.qty,
+                leasable: item.ca_is_leasable
+            }
+
+            if (item.ca_with_warranty) {
+                lineItem.warranty = {
+                    name: item.name,
+                    price: 0,
+                    sku: item.sku,
+                }
+            }
+
+            return lineItem;
+        });
 
         const options =  {
             consumerDetails,

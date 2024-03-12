@@ -77,22 +77,35 @@ class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
     {
         $quoteId = $this->checkoutSession->getQuote()->getId();
         if ($quoteId) {
-            $nonLeasableItems = [];
+            $nonLeasableItems = $warrantyItems = [];
 
             $quoteItems = $this->quoteItemRepository->getList($quoteId);
             foreach ($quoteItems as $quoteItem) {
-                $product = $this->productRepository->getById($quoteItem->getProduct()->getId());
-                if ($product) {
+                $productId = $quoteItem->getProduct()->getIdBySku($quoteItem->getSku());
+                if ($productId == null) {
+                    $productId = $quoteItem->getProduct()->getId();
+                }
 
-                    $attribute = $product->getDataByKey('chargeafter_non_leasable');
-                    if ($attribute) {
-                        $nonLeasableItems[$quoteItem->getItemId()] = $attribute;
+                $product = $this->productRepository->getById($productId);
+                if ($product) {
+                    $nonLeasableAttribute = $product->getDataByKey('chargeafter_non_leasable');
+                    if ($nonLeasableAttribute) {
+                        $nonLeasableItems[$quoteItem->getItemId()] = $nonLeasableAttribute;
+                    }
+
+                    $warrantyAttribute = $product->getDataByKey('chargeafter_warranty');
+                    if ($warrantyAttribute) {
+                        $warrantyItems[$quoteItem->getItemId()] = $warrantyAttribute;
                     }
                 }
             }
 
-            $nonLeasableCallable = function ($item) use ($nonLeasableItems) {
-                $item['ca_is_leasable'] = !key_exists($item['item_id'], $nonLeasableItems);
+            $nonLeasableCallable = function ($item) use ($nonLeasableItems, $warrantyItems) {
+                $itemId = $item['item_id'];
+
+                $item['ca_is_leasable'] = !key_exists($itemId, $nonLeasableItems);
+                $item['ca_with_warranty'] = key_exists($itemId, $warrantyItems);
+
                 return $item;
             };
 

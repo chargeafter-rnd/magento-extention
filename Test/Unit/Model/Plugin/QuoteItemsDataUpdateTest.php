@@ -79,9 +79,12 @@ class QuoteItemsDataUpdateTest extends TestCase
 
         $productMock = $this->createMock(Product::class);
         $productMock->expects($this->once())->method('getId')->willReturn($index);
-        $productMock->expects($this->once())->method('getDataByKey')
-            ->with('chargeafter_non_leasable')
-            ->willReturn($data['attribute']['chargeafter_non_leasable']);
+        $productMock->expects($this->exactly(2))->method('getDataByKey')
+            ->will($this->returnCallback(
+                function ($key) use ($data) {
+                    return $data['attribute'][$key];
+                })
+            );
 
         $quoteItemMock = $this->createMock(Quote\Item::class);
         $quoteItemMock->expects($this->any())->method('getProduct')->willReturn($productMock);
@@ -101,19 +104,22 @@ class QuoteItemsDataUpdateTest extends TestCase
                     [
                         'item_id' => 51,
                         'attribute' => [
-                            'chargeafter_non_leasable' => '0'
+                            'chargeafter_non_leasable' => '0',
+                            'chargeafter_warranty' => '0'
                         ]
                     ],
                     [
                         'item_id' => 52,
                         'attribute' => [
-                            'chargeafter_non_leasable' => '1'
+                            'chargeafter_non_leasable' => '1',
+                            'chargeafter_warranty' => '1'
                         ]
                     ],
                     [
                         'item_id' => 53,
                         'attribute' => [
-                            'chargeafter_non_leasable' => null
+                            'chargeafter_non_leasable' => null,
+                            'chargeafter_warranty' => null
                         ]
                     ],
                 ],
@@ -122,23 +128,29 @@ class QuoteItemsDataUpdateTest extends TestCase
                         [
                             'item_id' => 51,
                             'attribute' => [
-                                'chargeafter_non_leasable' => '0'
+                                'chargeafter_non_leasable' => '0',
+                                'chargeafter_warranty' => '0'
                             ],
                             'ca_is_leasable' => true,
+                            'ca_with_warranty' => false
                         ],
                         [
                             'item_id' => 52,
                             'attribute' => [
-                                'chargeafter_non_leasable' => '1'
+                                'chargeafter_non_leasable' => '1',
+                                'chargeafter_warranty' => '1'
                             ],
                             'ca_is_leasable' => false,
+                            'ca_with_warranty' => true
                         ],
                         [
                             'item_id' => 53,
                             'attribute' => [
-                                'chargeafter_non_leasable' => null
+                                'chargeafter_non_leasable' => null,
+                                'chargeafter_warranty' => null
                             ],
-                            'ca_is_leasable' => true
+                            'ca_is_leasable' => true,
+                            'ca_with_warranty' => false
                         ],
                     ]
                 ]
