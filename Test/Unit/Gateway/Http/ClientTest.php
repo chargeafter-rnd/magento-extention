@@ -21,16 +21,18 @@ use PHPUnit\Framework\TestCase;
 class ClientTest extends TestCase
 {
     /**
-     * @dataProvider additionProvider
+     * @dataProvider testPlaceRequestProvider
      * @param $url
      * @param $headers
      * @param $method
      * @param $requestBody
      * @param $responseBody
+     * @param $responseCode
+     * @param $expectResult
      * @throws \Magento\Payment\Gateway\Http\ClientException
      * @throws \Magento\Payment\Gateway\Http\ConverterException
      */
-    public function testPlaceRequest($url, $headers, $method, $requestBody, $responseBody)
+    public function testPlaceRequest($url, $headers, $method, $requestBody, $responseBody, $responseCode, $expectResult)
     {
         $transferObject = $this->createMock(TransferInterface::class);
         $transferObject->expects($this->once())
@@ -85,16 +87,28 @@ class ClientTest extends TestCase
             ->method('getBody')
             ->willReturn($responseBody);
 
+        $isSuccessResponse = 200 <= $responseCode && 300 > $responseCode;
+        $response->expects($this->once())
+            ->method('isSuccess')
+            ->willReturn($isSuccessResponse);
+
+        if ($isSuccessResponse === false) {
+            $response->expects($this->once())
+                ->method('getReasonPhrase')
+                ->willReturn('reason ' . $responseCode);
+        }
+
         $httpClient->expects($this->once())
             ->method('send')
             ->willReturnReference($response);
 
         $client = new Client($clientFactory);
+        $result = $client->placeRequest($transferObject);
 
-        $this->assertSame(json_decode($responseBody, true), $client->placeRequest($transferObject));
+        $this->assertSame($expectResult, $result);
     }
 
-    public function additionProvider(): array
+    public function testPlaceRequestProvider(): array
     {
         return [
             [
@@ -107,6 +121,8 @@ class ClientTest extends TestCase
                     'payload' => 'payload'
                 ],
                 json_encode(['body']),
+                201,
+                ['body']
             ],
             [
                 '/payment/charges',
@@ -119,6 +135,8 @@ class ClientTest extends TestCase
                     'payload' => 'payload'
                 ],
                 json_encode(['body']),
+                200,
+                ['body']
             ],
             [
                 '/payment/charges',
@@ -128,6 +146,43 @@ class ClientTest extends TestCase
                 'POST',
                 null,
                 json_encode(['body']),
+                201,
+                ['body']
+            ],
+            [
+                '/payment/charges',
+                [
+                    'Authorization' => 'Bearer privateKey'
+                ],
+                'POST',
+                null,
+                json_encode([
+                    'requestId' => 'some_request_id',
+                    'errors' => [
+                        'error'
+                    ]
+                ]),
+                500,
+                [
+                    'requestId' => 'some_request_id',
+                    'errors' => [
+                        'error'
+                    ],
+                    'message' => 'API Response - reason 500'
+                ]
+            ],
+            [
+                '/payment/charges',
+                [
+                    'Authorization' => 'Bearer privateKey'
+                ],
+                'POST',
+                null,
+                json_encode([]),
+                403,
+                [
+                    'message' => 'API Response - reason 403'
+                ]
             ],
         ];
     }

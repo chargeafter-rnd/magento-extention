@@ -38,9 +38,7 @@ class ProductInitAfter implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        /**
-         * @var ProductInterface
-         */
+        /** @var ProductInterface $product */
         $product = $observer->getData('product');
         $this->currentProductRegistry->set($product);
     }

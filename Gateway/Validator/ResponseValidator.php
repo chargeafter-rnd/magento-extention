@@ -21,9 +21,23 @@ class ResponseValidator extends AbstractResponseValidator
         return [
             function ($validationSubject) {
                 $response = $validationSubject['response'];
+
+                $rule = !key_exists('errors', $response);
+                $messageParts = [ __('ChargeAfter error') ];
+
+                if (!$rule) {
+                    if (key_exists('requestId', $response)) {
+                        array_push($messageParts, 'Request ID: ' . $response['requestId']);
+                    }
+
+                    if (key_exists('errors', $response)) {
+                        array_push($messageParts, 'Errors: ' . json_encode($response['errors']));
+                    }
+                }
+
                 return [
-                    !key_exists('code', $response),
-                    [$response['message'] ?? __('ChargeAfter error response.')]
+                    $rule,
+                    implode('. ', $messageParts)
                 ];
             }
         ];

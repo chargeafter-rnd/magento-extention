@@ -11,12 +11,12 @@
 
 namespace Chargeafter\Payment\Gateway\Validator;
 
-class AuthorizeResponseValidator extends ResponseValidator
+class PostSaleResponseValidator extends ResponseValidator
 {
     /**
      * @return array
      */
-    protected function getResponseValidators(): array
+    protected function getResponseValidators():array
     {
         return array_merge(
             parent::getResponseValidators(),
@@ -24,8 +24,9 @@ class AuthorizeResponseValidator extends ResponseValidator
                 function ($validationSubject) {
                     $response = $validationSubject['response'];
 
-                    $rule = key_exists('state', $response) && mb_strtolower($response['state']) === 'authorized';
-                    $message = __('ChargeAfter error. Unable to authorize the charge');
+                    $rule = !key_exists('code', $response);
+                    $message = __('ChargeAfter error. Unable to execute post-sale operation for the charge');
+
                     if (key_exists('message', $response)) {
                         $message .= ': ' . $response['message'];
                     }

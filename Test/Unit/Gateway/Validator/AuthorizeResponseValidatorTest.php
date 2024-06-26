@@ -53,28 +53,28 @@ class AuthorizeResponseValidatorTest extends TestCase
     public function dataProviderTestValidate(): array
     {
         return [
-            [
-                'validationSubject'=>[
-                    'response'=>[
-                        'state'=>'AUTHORIZED',
+            'Valid response' => [
+                'validationSubject' => [
+                    'response' => [
+                        'state' => 'AUTHORIZED',
                     ]
                 ],
-                'isValid'=>true,
-                'messages'=>[],
-                'errorCodes'=>[]
+                'isValid' => true,
+                'messages' => [],
+                'errorCodes' => []
             ],
-            [
-                'validationSubject'=>[
-                    'response'=>[
-                        'state'=>'DECLINED',
-                        'message'=>'Transaction was declined.'
+            'Invalid response with message' => [
+                'validationSubject' => [
+                    'response' => [
+                        'state' => 'DECLINED',
+                        'message' => 'Transaction was declined.'
                     ]
                 ],
-                'isValid'=>false,
-                'messages'=>[
-                    'Transaction was declined.'
+                'isValid' => false,
+                'messages' => [
+                    'ChargeAfter error. Unable to authorize the charge: Transaction was declined.'
                 ],
-                'errorCodes'=>[]
+                'errorCodes' => []
             ]
         ];
     }

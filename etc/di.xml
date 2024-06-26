@@ -82,7 +82,7 @@
             <argument name="requestBuilder" xsi:type="object">Chargeafter\Payment\Gateway\Request\CaptureBuilder</argument>
             <argument name="transferFactory" xsi:type="object">Chargeafter\Payment\Gateway\Http\CaptureTransferFactory</argument>
             <argument name="client" xsi:type="object">Chargeafter\Payment\Gateway\Http\Client</argument>
-            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\ResponseValidator</argument>
+            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\PostSaleResponseValidator</argument>
             <argument name="handler" xsi:type="object">Chargeafter\Payment\Gateway\Response\CaptureHandler</argument>
         </arguments>
     </virtualType>
@@ -91,7 +91,7 @@
             <argument name="requestBuilder" xsi:type="object">Chargeafter\Payment\Gateway\Request\RefundBuilder</argument>
             <argument name="transferFactory" xsi:type="object">Chargeafter\Payment\Gateway\Http\RefundTransferFactory</argument>
             <argument name="client" xsi:type="object">Chargeafter\Payment\Gateway\Http\Client</argument>
-            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\ResponseValidator</argument>
+            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\PostSaleResponseValidator</argument>
             <argument name="handler" xsi:type="object">Chargeafter\Payment\Gateway\Response\RefundHandler</argument>
         </arguments>
     </virtualType>
@@ -100,7 +100,7 @@
             <argument name="requestBuilder" xsi:type="object">Chargeafter\Payment\Gateway\Request\VoidBuilder</argument>
             <argument name="transferFactory" xsi:type="object">Chargeafter\Payment\Gateway\Http\VoidTransferFactory</argument>
             <argument name="client" xsi:type="object">Chargeafter\Payment\Gateway\Http\Client</argument>
-            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\ResponseValidator</argument>
+            <argument name="validator" xsi:type="object">Chargeafter\Payment\Gateway\Validator\PostSaleResponseValidator</argument>
             <argument name="handler" xsi:type="object">Chargeafter\Payment\Gateway\Response\VoidHandler</argument>
         </arguments>
     </virtualType>
