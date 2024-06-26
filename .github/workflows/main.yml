@@ -86,6 +86,8 @@ jobs:
       - name: 'Phpstan'
         if: matrix.magento != '2.3.7' && matrix.magento != '2.4.3'
         uses: MAD-I-T/magento-actions@v3.25
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         with:
           php: ${{ matrix.php }}
           process: 'phpstan'
