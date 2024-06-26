@@ -60,7 +60,7 @@ jobs:
           path: ${{ env.MODULE }}
 
       - name: 'Install Magento 2 repo'
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         with:
@@ -74,7 +74,7 @@ jobs:
           mkdir -p magento/${{ env.MODULE_DIR }} && cp -r ${{ env.MODULE }}/* magento/${{ env.MODULE_DIR }}
 
       - name: 'Unit tests'
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         with:
@@ -85,7 +85,7 @@ jobs:
 
       - name: 'Phpstan'
         if: matrix.magento != '2.3.7' && matrix.magento != '2.4.3'
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         with:
@@ -95,7 +95,7 @@ jobs:
 
       - name: 'Mess detector'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         with:
           php: ${{ matrix.php }}
           process: 'mess-detector'
@@ -103,7 +103,7 @@ jobs:
 
       - name: 'Coding standard checking'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         with:
           php: ${{ matrix.php }}
           process: 'phpcs-test'
@@ -113,7 +113,7 @@ jobs:
 
       - name: 'Security scan'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.25
+        uses: MAD-I-T/magento-actions@v3.29
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         with:
