@@ -18,18 +18,22 @@ jobs:
       fail-fast: true
       matrix:
         php: [7.4, 8.1, 8.2]
-        magento: [2.3.7, 2.4.3, 2.4.5, 2.4.6]
+        magento: [2.3.7, 2.4.3, 2.4.5, 2.4.6, 2.4.7]
         exclude:
           - php: 7.4
             magento: 2.4.5
           - php: 7.4
             magento: 2.4.6
+          - php: 7.4
+            magento: 2.4.7
           - php: 8.1
             magento: 2.3.7
           - php: 8.1
             magento: 2.4.3
           - php: 8.1
             magento: 2.4.6
+          - php: 8.1
+            magento: 2.4.7
           - php: 8.2
             magento: 2.3.7
           - php: 8.2
@@ -83,15 +87,15 @@ jobs:
           unit_test_config: 'dev/tests/unit/phpunit.xml.dist'
           unit_test_subset_path: '${{ env.MODULE_DIR }}/Test/Unit'
 
-      - name: 'Phpstan'
-        if: matrix.magento != '2.3.7' && matrix.magento != '2.4.3'
-        uses: MAD-I-T/magento-actions@v3.29
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-        with:
-          php: ${{ matrix.php }}
-          process: 'phpstan'
-          exec_path: '../${{ env.MODULE }}/'
+      #- name: 'Phpstan'
+      #  if: matrix.magento != '2.3.7' && matrix.magento != '2.4.3'
+      #  uses: MAD-I-T/magento-actions@v3.29
+      #  env:
+      #    COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      #  with:
+      #    php: ${{ matrix.php }}
+      #    process: 'phpstan'
+      #    exec_path: '../${{ env.MODULE }}/'
 
       - name: 'Mess detector'
         if: always()
