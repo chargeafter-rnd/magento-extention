@@ -11,13 +11,13 @@
 
 namespace Chargeafter\Payment\Test\Unit\Gateway\Validator;
 
-use Chargeafter\Payment\Gateway\Validator\ResponseValidator;
+use Chargeafter\Payment\Gateway\Validator\PostSaleResponseValidator;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
 use Magento\Payment\Gateway\Validator\Result;
 
 use PHPUnit\Framework\TestCase;
 
-class ResponseValidatorTest extends TestCase
+class PostSaleResponseValidatorTest extends TestCase
 {
     /**
      * @param array $validationSubject
@@ -39,7 +39,7 @@ class ResponseValidatorTest extends TestCase
                 'errorCodes' => $errorCodes
             ])
             ->willReturn($result);
-        $responseValidator = new ResponseValidator($resultFactory);
+        $responseValidator = new PostSaleResponseValidator($resultFactory);
         $actual = $responseValidator->validate($validationSubject);
         self::assertEquals($result, $actual);
     }
@@ -50,38 +50,38 @@ class ResponseValidatorTest extends TestCase
     public function dataProviderTestValidate(): array
     {
         return [
-            'Invalid response with message'=>[
-                'validationSubject'=>[
-                    'response'=> [
-                        'code'=>123,
-                        'message'=>'Error Code 123'
+            'Invalid response with message' => [
+                'validationSubject' => [
+                    'response' => [
+                        'code' => 123,
+                        'message' => 'Error Code 123'
                     ]
                 ],
-                'isValid'=>false,
-                'messages'=>[
-                    'Error Code 123'
+                'isValid' => false,
+                'messages' => [
+                    'ChargeAfter error. Unable to execute post-sale operation for the charge: Error Code 123'
                 ],
-                'errorCodes'=>[]
+                'errorCodes' => []
             ],
-            'Invalid response without message'=>[
-                'validationSubject'=>[
-                    'response'=> [
-                        'code'=>123,
+            'Invalid response without message' => [
+                'validationSubject' => [
+                    'response' => [
+                        'code' => 123,
                     ]
                 ],
-                'isValid'=>false,
-                'messages'=>[
-                    'ChargeAfter error response.'
+                'isValid' => false,
+                'messages' => [
+                    'ChargeAfter error. Unable to execute post-sale operation for the charge'
                 ],
-                'errorCodes'=>[]
+                'errorCodes' => []
             ],
-            'Valid response'=>[
-                'validationSubject'=>[
-                    'response'=> []
+            'Valid response' => [
+                'validationSubject' => [
+                    'response' => []
                 ],
-                'isValid'=>true,
-                'messages'=>[],
-                'errorCodes'=>[]
+                'isValid' => true,
+                'messages' => [],
+                'errorCodes' => []
             ]
         ];
     }

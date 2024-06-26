@@ -14,7 +14,11 @@ namespace Chargeafter\Payment\Block;
 use Chargeafter\Payment\Helper\ApiHelper;
 use Chargeafter\Payment\Registry\CurrentProductRegistry;
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Quote\Api\Data\CartInterface;
 use Magento\Widget\Block\BlockInterface;
 
 class PromotionalWidgetBlock extends Template implements BlockInterface
@@ -30,6 +34,11 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
     private $currentProductRegistry;
 
     /**
+     * @var CheckoutSession
+     */
+    private $checkoutSession;
+
+    /**
      * @var ApiHelper
      */
     protected $_helper;
@@ -38,17 +47,21 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
      * PromotionalWidgetBlock constructor.
      * @param ApiHelper $helper
      * @param CurrentProductRegistry $currentProductRegistry
-     * @param Template\Context $context
+     * @param CheckoutSession $checkoutSession
+     * @param Context $context
      * @param array $data
      */
     public function __construct(
         ApiHelper $helper,
         CurrentProductRegistry $currentProductRegistry,
+        CheckoutSession $checkoutSession,
         Template\Context $context,
         array $data = []
     ) {
         $this->_helper = $helper;
         $this->currentProductRegistry = $currentProductRegistry;
+        $this->checkoutSession = $checkoutSession;
+
         parent::__construct($context, $data);
     }
 
@@ -58,6 +71,18 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
     public function getProduct(): ?ProductInterface
     {
         return $this->currentProductRegistry->get();
+    }
+
+    public function getCart(): ?CartInterface
+    {
+        try {
+            $handle = $this->getLayout()->getUpdate()->getHandles();
+            if (in_array('checkout_cart_index', $handle) && $this->checkoutSession) {
+                return $this->checkoutSession->getQuote();
+            }
+        } catch (LocalizedException $e) {}
+
+        return null;
     }
 
     /**

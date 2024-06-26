@@ -11,6 +11,7 @@
 
 namespace Chargeafter\Payment\Gateway\Http;
 
+use Exception;
 use Laminas\Http\Client\Exception\RuntimeException;
 use Laminas\Http\Request;
 use Laminas\Http\ClientFactory as LaminasClientFactory;
@@ -75,6 +76,10 @@ class Client implements ClientInterface
             $result = $this->converter
                 ? $this->converter->convert($response->getBody())
                 : json_decode($response->getBody(), true);
+
+            if (!$response->isSuccess()) {
+                $result['message'] = 'API Response - ' . $response->getReasonPhrase();
+            }
         } catch (RuntimeException $e) {
             throw new ClientException(
                 __($e->getMessage())
@@ -83,6 +88,6 @@ class Client implements ClientInterface
             throw $e;
         }
 
-        return $result;
+        return $result ?? [];
     }
 }
