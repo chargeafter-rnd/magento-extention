@@ -2,7 +2,7 @@
     "name": "chargeafter1/magento-extention",
     "description": "N/A",
     "type": "magento2-module",
-    "version": "1.8.1",
+    "version": "1.9.0",
     "authors": [
         {
             "name": "Taras Lagan",

@@ -24,38 +24,52 @@ class AuthoriseHandlerTest extends TestCase
      */
     public function testHandle()
     {
+        $data = [
+            'lender' => [
+                'information' => [
+                    'leaseId' => '0000021'
+                ]
+            ]
+        ];
+
         $response = [
-            'id'=>'000001',
-            'offer'=>[
-                'lender'=>[
-                    'name'=>'lender_name'
+            'id' => '000001',
+            'offer' => [
+                'lender' => [
+                    'name' => 'lender_name'
                 ]
             ],
             'totalAmount' => 200
         ];
-        $paymentMock = $this->createMock(Payment::class);
+
         $additionalInformation = [
-            [$this->equalTo('lender'),$this->equalTo($response['offer']['lender']['name'])],
-            [$this->equalTo('chargeId'),$this->equalTo($response['id'])],
-            [$this->equalTo('chargeTotalAmount'),$this->equalTo($response['totalAmount'])]
+            [$this->equalTo('lender'), $this->equalTo($response['offer']['lender']['name'])],
+            [$this->equalTo('chargeId'), $this->equalTo($response['id'])],
+            [$this->equalTo('chargeTotalAmount'), $this->equalTo($response['totalAmount'])],
+            [$this->equalTo('leaseId'), $this->equalTo($data['lender']['information']['leaseId'])],
         ];
+
+        $paymentMock = $this->createMock(Payment::class);
         $paymentMock->expects($this->exactly(count($additionalInformation)))
             ->method('setAdditionalInformation')
             ->withConsecutive(...$additionalInformation);
+        $paymentMock->expects($this->once())
+            ->method('getAdditionalInformation')
+            ->with('data')
+            ->willReturn(json_encode($data));
         $paymentMock->expects($this->once())
             ->method('setTransactionId')
             ->with($response['id']);
         $paymentMock->expects($this->once())
             ->method('setIsTransactionClosed')
             ->with(false);
+
         $paymentDoMock = $this->createMock(PaymentDataObjectInterface::class);
         $paymentDoMock->expects(self::once())
             ->method('getPayment')
             ->willReturn($paymentMock);
-        $handlingSubject = [
-            'payment' => $paymentDoMock,
-        ];
+
         $handler = new AuthoriseHandler();
-        $handler->handle($handlingSubject, $response);
+        $handler->handle([ 'payment' => $paymentDoMock ], $response);
     }
 }

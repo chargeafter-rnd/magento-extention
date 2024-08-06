@@ -8,23 +8,26 @@
  * @author      taras@lagan.com.ua
  */
 
-define(function (){
-  let apiStatus=0;
+define(function () {
+  let isLoaded=0;
 
   function loadApi(cdnUrl, caConfig){
-    if(apiStatus===0){
-      apiStatus = 1;
+    if(isLoaded === 0) {
+      isLoaded = 1;
 
-      window.caConfig = caConfig;
-      !function(e,t,c,a,n){
-        var r,o=t.getElementsByTagName(c)[0];
-        e.ChargeAfter || (e.ChargeAfter = {}),
-        t.getElementById(a)||(e.ChargeAfter.cfg = n,(r=t.createElement(c)).id=a,
-        r.src=cdnUrl+"/web/v2/chargeafter.min.js?t="+1*new Date,
-        r.async=!0,o.parentNode.insertBefore(r,o))}
-      (window,document,"script","chargeafter-checkout-finance",caConfig);
+      function onLoadChargeAfterSDKScript() {
+          ChargeAfter.init(caConfig);
+      }
+
+      var script = document.createElement('script');
+      script.src = cdnUrl + '/web/v2/chargeafter.min.js?t=' + Date.now();
+      script.type = 'text/javascript';
+      script.async = true;
+      script.onload = onLoadChargeAfterSDKScript;
+      document.body.appendChild(script);
     }
-    return apiStatus;
+
+    return isLoaded;
   }
 
   return loadApi;
