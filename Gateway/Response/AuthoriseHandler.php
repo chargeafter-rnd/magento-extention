@@ -22,9 +22,28 @@ class AuthoriseHandler implements HandlerInterface
     {
         $payment = $handlingSubject['payment']->getPayment();
 
-        $payment->setAdditionalInformation('lender', $response['offer']['lender']['name']);
+        if (
+            $response &&
+            key_exists('offer', $response) &&
+            key_exists('lender', $response['offer'])
+        ) {
+            $payment->setAdditionalInformation('lender', $response['offer']['lender']['name']);
+        }
+
         $payment->setAdditionalInformation('chargeId', $response['id']);
         $payment->setAdditionalInformation('chargeTotalAmount', $response['totalAmount']);
+
+        $data = $payment->getAdditionalInformation('data');
+        $data = $data ? json_decode($data, true) : null;
+
+        if (
+            $data &&
+            key_exists('lender', $data) &&
+            key_exists('information', $data['lender'] ) &&
+            key_exists('leaseId', $data['lender']['information'])
+        ) {
+            $payment->setAdditionalInformation('leaseId', $data['lender']['information']['leaseId']);
+        }
 
         $payment->setTransactionId($response['id']);
         $payment->setIsTransactionClosed(false);
