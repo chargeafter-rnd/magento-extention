@@ -40,6 +40,9 @@ $output .= " data-widget-type=\"$widget_type\"";
 $output .= " data-widget-mode=\"$widget_mode\"";
 
 if (in_array($widget_type, $product_widgets)) {
+    $widget_item_tag = $block->getData('tag');
+    $financing_page_url = $block->getData('financing_page_url');
+
     if ($product) {
         $product_sku = $product->getSku();
         $product_price = $product->getFinalPrice();
@@ -54,8 +57,12 @@ if (in_array($widget_type, $product_widgets)) {
         $output .= " data-widget-item-sku=\"$cart_sku\" data-widget-item-price=\"$cart_price\"";
     }
 
-    if ($block->getData('financing_page_url')) {
-        $output .= " data-widget-financing-page-url=\"{$block->getData('financing_page_url')}\"";
+    if ($widget_item_tag) {
+        $output .= " data-widget-item-tag=\"{$widget_item_tag}\"";
+    }
+
+    if ($financing_page_url) {
+        $output .= " data-widget-financing-page-url=\"{$financing_page_url}\"";
     }
 }
 

@@ -56,13 +56,16 @@ class PromotionalWidgetBlockTest extends TestCase
         $this->currentProductRegistry->set($expected);
 
         $actual = $this->block->getProduct();
+
         self::assertSame($expected, $actual);
     }
 
     public function testGetProductWithNull()
     {
         $expected = null;
+
         $actual = $this->block->getProduct();
+
         self::assertSame($expected, $actual);
     }
 
@@ -87,7 +90,9 @@ class PromotionalWidgetBlockTest extends TestCase
         ]);
 
         $expected = null;
+
         $actual = $this->block->getCart();
+
         self::assertSame($expected, $actual);
     }
 
@@ -97,7 +102,9 @@ class PromotionalWidgetBlockTest extends TestCase
         $this->helper->expects($this->once())
             ->method('getCdnUrl')
             ->willReturn($expected);
+
         $actual = $this->block->getCdnUrl();
+
         self::assertSame($expected, $actual);
     }
 
@@ -107,7 +114,31 @@ class PromotionalWidgetBlockTest extends TestCase
         $this->helper->expects($this->once())
             ->method('getPublicKey')
             ->willReturn($expected);
+
         $actual = $this->block->getPublicKey();
+
         self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @dataProvider getDataProvider
+     */
+    public function testGetData($key, $value)
+    {
+        $this->block->setData($key, $value);
+
+        $actual = $this->block->getData($key);
+
+        self::assertSame($value, $actual);
+    }
+
+    public function getDataProvider()
+    {
+        return [
+            ['type', 'default-template'],
+            ['tag', 'TAG123'],
+            ['financing_page_url', 'https://example.com'],
+            ['mode', 'price-focus'],
+        ];
     }
 }
