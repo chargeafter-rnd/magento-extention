@@ -49,9 +49,34 @@ class OrderTaxProcessTest extends TestCase
             });
 
         $order = $this->createMock(Order::class);
+
+        $orderItem = $this->createMock(Order\Item::class);
+        $orderItem->expects($this->once())
+            ->method('getTaxAmount')
+            ->willReturn(37.36);
+        $orderItem->expects($this->once())
+            ->method('setTaxAmount')
+            ->with(0)
+            ->willReturn($orderItem);
+        $orderItem->expects($this->once())
+            ->method('setTaxPercent')
+            ->with(0)
+            ->willReturn($orderItem);
+        $orderItem->expects($this->once())
+            ->method('setBaseTaxAmount')
+            ->with(0)
+            ->willReturn($orderItem);
+
         $order->expects($this->exactly(2))
             ->method('getIncrementId')
             ->willReturn('any');
+        $order->expects($this->once())
+            ->method('getAllItems')
+            ->willReturn([$orderItem]);
+        $order->expects($this->once())
+            ->method('setItems')
+            ->with([$orderItem])
+            ->willReturn($order);
         $order->expects($this->once())
             ->method('getTotalDue')
             ->willReturn(784.56);
@@ -59,7 +84,11 @@ class OrderTaxProcessTest extends TestCase
             ->method('getTaxAmount')
             ->willReturn(37.36);
         $order->expects($this->once())
-            ->method('setBaseTaxAmount')
+            ->method('setShippingTaxAmount')
+            ->with(0)
+            ->willReturn($order);
+        $order->expects($this->once())
+            ->method('setBaseShippingTaxAmount')
             ->with(0)
             ->willReturn($order);
         $order->expects($this->once())
@@ -67,12 +96,20 @@ class OrderTaxProcessTest extends TestCase
             ->with(0)
             ->willReturn($order);
         $order->expects($this->once())
-            ->method('setBaseGrandTotal')
-            ->with(747.2)
+            ->method('setBaseTaxAmount')
+            ->with(0)
             ->willReturn($order);
         $order->expects($this->once())
             ->method('setGrandTotal')
             ->with(747.2)
+            ->willReturn($order);
+        $order->expects($this->once())
+            ->method('setBaseGrandTotal')
+            ->with(747.2)
+            ->willReturn($order);
+        $order->expects($this->once())
+            ->method('addCommentToStatusHistory')
+            ->with('Order tax changed. Transaction ID: "any_charge"')
             ->willReturn($order);
 
         $payment->expects($this->once())
@@ -81,6 +118,7 @@ class OrderTaxProcessTest extends TestCase
 
         $this->orderResourceMock->expects($this->once())
                                 ->method('save')
+                                ->with($order)
                                 ->willReturnSelf();
 
         $this->orderTaxProcess->reCalculate($payment);
