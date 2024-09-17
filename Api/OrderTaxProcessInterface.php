@@ -3,7 +3,6 @@
 namespace Chargeafter\Payment\Api;
 
 use Magento\Sales\Api\Data\OrderPaymentInterface;
-use Magento\Sales\Model\Order;
 
 /**
  * @api

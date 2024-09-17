@@ -4,6 +4,7 @@ namespace Chargeafter\Payment\Observer;
 
 use Chargeafter\Payment\Api\TransactionTypeInterface;
 use Chargeafter\Payment\Helper\ApiHelper;
+use Chargeafter\Payment\Model\PaymentMethod;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
@@ -54,7 +55,7 @@ class OrderPlaceAfter implements ObserverInterface
         if ($order->getId()) {
             $payment = $order->getPayment();
 
-            if ($payment->getMethod() === 'chargeafter') {
+            if ($payment->getMethod() === PaymentMethod::CODE) {
                 // Tax re-calculation
                 $orderTaxProcess = $this->orderTaxProcessInterfaceFactory->create();
                 $orderTaxProcess->reCalculate($payment);

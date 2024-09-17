@@ -11,14 +11,13 @@
 
 namespace Chargeafter\Payment\Model\Ui;
 
+use Chargeafter\Payment\Model\PaymentMethod;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Payment\Model\MethodInterface;
 use Chargeafter\Payment\Helper\ApiHelper;
 
 class ConfigProvider implements ConfigProviderInterface
 {
-    const CODE = 'chargeafter';
-
     /**
      * @var MethodInterface
      */
@@ -49,8 +48,8 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'payment'=>[
-                self::CODE=>[
-                    'description'=>$this->_method->getConfigData('description'),
+                PaymentMethod::CODE => [
+                    'description' => $this->_method->getConfigData('description'),
                     'cdnUrl' => $this->_helper->getCdnUrl(),
                     'publicKey' => $this->_helper->getPublicKey(),
                     'isSameCustomerBillingAddress' => $this->_helper->isShippingEqualsBilling()

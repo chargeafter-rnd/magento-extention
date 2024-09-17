@@ -12,6 +12,7 @@
 namespace Chargeafter\Payment\Observer;
 
 use Chargeafter\Payment\Helper\ApiHelper;
+use Chargeafter\Payment\Model\PaymentMethod;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
@@ -38,7 +39,7 @@ class PaymentMethodIsActive implements ObserverInterface
     {
         $methodInstance = $observer->getData('method_instance');
 
-        if ($methodInstance->getCode() === 'chargeafter') {
+        if ($methodInstance->getCode() === PaymentMethod::CODE) {
             $quote = $observer->getData('quote');
             $storeId = $quote ? $quote->getStoreId() : null;
 
