@@ -13,6 +13,7 @@ namespace Chargeafter\Payment\Test\Unit\Block;
 
 use Chargeafter\Payment\Block\PromotionalWidgetBlock;
 use Magento\Checkout\Model\Session;
+use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Chargeafter\Payment\Helper\ApiHelper;
 use Chargeafter\Payment\Registry\CurrentProductRegistry;
@@ -46,6 +47,7 @@ class PromotionalWidgetBlockTest extends TestCase
             'helper' => $this->helper,
             'currentProductRegistry' => $this->currentProductRegistry,
             'checkoutSession' => $this->checkoutSession,
+            'serializer' => new JsonHexTag(),
             'layout' => $layoutMock
         ]);
     }
@@ -116,6 +118,39 @@ class PromotionalWidgetBlockTest extends TestCase
             ->willReturn($expected);
 
         $actual = $this->block->getPublicKey();
+
+        self::assertSame($expected, $actual);
+    }
+
+    public function testGetStoreId()
+    {
+        $expected = 'storeId';
+        $this->helper->expects($this->once())
+            ->method('getStoreId')
+            ->willReturn($expected);
+
+        $actual = $this->block->getStoreId();
+
+        self::assertSame($expected, $actual);
+    }
+
+    public function testGetComponentJsonConfig()
+    {
+        $expected = "{\"cdnUrl\":\"https:\/\/cdn.test\",\"caConfig\":{\"apiKey\":\"public_api_key\",\"storeId\":\"store_id\"}}";
+
+        $this->helper->expects($this->once())
+            ->method('getCdnUrl')
+            ->willReturn('https://cdn.test');
+
+        $this->helper->expects($this->once())
+            ->method('getPublicKey')
+            ->willReturn('public_api_key');
+
+        $this->helper->expects($this->once())
+            ->method('getStoreId')
+            ->willReturn('store_id');
+
+        $actual = $this->block->getComponentJsonConfig();
 
         self::assertSame($expected, $actual);
     }

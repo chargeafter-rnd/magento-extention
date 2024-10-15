@@ -23,11 +23,12 @@ define([
             options.callback = function (token, data, error) {
                 if(error){
                     deferred.reject(error);
-                }else{
+                } else{
                     deferred.resolve({token, data});
                 }
             };
-            ChargeAfter.checkout.present(options);
+
+            ChargeAfter.payments.present('checkout', options);
         }).fail(
             function (error) {
                 errorProcessor.process(error, messageContainer);

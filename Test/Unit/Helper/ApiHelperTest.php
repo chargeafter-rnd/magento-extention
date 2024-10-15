@@ -183,6 +183,26 @@ class ApiHelperTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @param string $environment
+     * @param string $expected
+     * @dataProvider dataProviderTestGetStoreId
+     */
+    public function testGetStoreId(string $environment, string $expected)
+    {
+        $this->config->expects($this->exactly(2))
+            ->method('getValue')
+            ->willReturnMap([
+                ['environment', null, $environment],
+                ['sandbox_store_id', null, 'sandbox_store_id'],
+                ['production_store_id', null, 'production_store_id']
+            ]);
+
+        $actual = $this->helper->getStoreId();
+
+        self::assertSame($expected, $actual);
+    }
+
     public function dataProviderTestGetPrivateKey(): array
     {
         return [
@@ -193,6 +213,20 @@ class ApiHelperTest extends TestCase
             [
                 'environment'=>'production',
                 'expected'=>'production_private_key'
+            ]
+        ];
+    }
+
+    public function dataProviderTestGetStoreId(): array
+    {
+        return [
+            [
+                'environment'=>'sandbox',
+                'expected'=>'sandbox_store_id'
+            ],
+            [
+                'environment'=>'production',
+                'expected'=>'production_store_id'
             ]
         ];
     }
@@ -277,7 +311,7 @@ class ApiHelperTest extends TestCase
             ->with('bill_to_equal_ship_to')
             ->willReturn($shippingEqualsBilling);
 
-        $actual = $this->helper->isShippingEqualsBilling(null);
+        $actual = $this->helper->shouldBeShippingEqualsBilling(null);
 
         self::assertSame($expected, $actual);
     }
@@ -298,6 +332,45 @@ class ApiHelperTest extends TestCase
             ],
             [
                 'bill_to_equal_ship_to' => null,
+                'expected' => false
+            ]
+        ];
+    }
+
+    /**
+     * @param int|null $consumerDataUpdateActivate
+     * @param bool $expected
+     *
+     * @dataProvider dataProviderTestIsConsumerDataUpdateActivate
+     */
+    public function testIsConsumerDataUpdateActivate($consumerDataUpdateActivate, bool $expected)
+    {
+        $this->config->expects($this->once())
+            ->method('getValue')
+            ->with('customer_data_update_active')
+            ->willReturn($consumerDataUpdateActivate);
+
+        $actual = $this->helper->shouldUpdateConsumerData(null);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function dataProviderTestIsConsumerDataUpdateActivate()
+    {
+        return [
+            [
+                'customer_data_update_active' => 1,
+                'expected' => true
+            ],
+            [
+                'customer_data_update_active' => 0,
+                'expected' => false
+            ],
+            [
+                'customer_data_update_active' => null,
                 'expected' => false
             ]
         ];

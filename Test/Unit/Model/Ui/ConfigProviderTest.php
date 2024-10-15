@@ -13,10 +13,8 @@ namespace Chargeafter\Payment\Test\Unit\Model\Ui;
 
 use Chargeafter\Payment\Helper\ApiHelper;
 use Chargeafter\Payment\Model\Ui\ConfigProvider;
-use Magento\Framework\View\Asset\Repository;
 use Magento\Payment\Model\MethodInterface;
 use PHPUnit\Framework\TestCase;
-use ReflectionException;
 
 class ConfigProviderTest extends TestCase
 {
@@ -24,11 +22,14 @@ class ConfigProviderTest extends TestCase
      * @param $description
      * @param $cdnUrl
      * @param $publicKey
+     * @param $storeId
+     * @param $customerDataUpdateActive
      * @param $shippingEqualsBilling
      * @param $expected
+     *
      * @dataProvider dataProvider
      */
-    public function testGetConfig($description, $cdnUrl, $publicKey, $shippingEqualsBilling, $expected)
+    public function testGetConfig($description, $cdnUrl, $publicKey, $storeId, $customerDataUpdateActive, $shippingEqualsBilling, $expected)
     {
         $method = $this->createMock(MethodInterface::class);
         $method->expects($this->once())
@@ -45,7 +46,13 @@ class ConfigProviderTest extends TestCase
             ->method('getPublicKey')
             ->willReturn($publicKey);
         $helper->expects($this->once())
-            ->method('isShippingEqualsBilling')
+            ->method('getStoreId')
+            ->willReturn($storeId);
+        $helper->expects($this->once())
+            ->method('shouldUpdateConsumerData')
+            ->willReturn($customerDataUpdateActive);
+        $helper->expects($this->once())
+            ->method('shouldBeShippingEqualsBilling')
             ->willReturn($shippingEqualsBilling);
 
         $configProvider = new ConfigProvider($method, $helper);
@@ -61,6 +68,8 @@ class ConfigProviderTest extends TestCase
                 'description' => 'description',
                 'cdn_url' => 'cdnUrl',
                 'public_key' => 'publicKey',
+                'store_id' => 'storeId',
+                'customer_data_update_active' => true,
                 'bill_to_equal_ship_to' => true,
                 'expected' => [
                     'payment' => [
@@ -68,7 +77,9 @@ class ConfigProviderTest extends TestCase
                             'description' => 'description',
                             'cdnUrl' => 'cdnUrl',
                             'publicKey' => 'publicKey',
-                            'isSameCustomerBillingAddress' => true
+                            'storeId' => 'storeId',
+                            'shouldUpdateConsumerData' => true,
+                            'shouldBeSameCustomerBillingAddress' => true
                         ]
                     ]
                 ]
@@ -77,6 +88,8 @@ class ConfigProviderTest extends TestCase
                 'description' => 'description',
                 'cdn_url' => 'cdnUrl',
                 'public_key' => 'publicKey',
+                'store_id' => null,
+                'customer_data_update_active' => false,
                 'bill_to_equal_ship_to' => false,
                 'expected' => [
                     'payment' => [
@@ -84,7 +97,9 @@ class ConfigProviderTest extends TestCase
                             'description' => 'description',
                             'cdnUrl' => 'cdnUrl',
                             'publicKey' => 'publicKey',
-                            'isSameCustomerBillingAddress' => false
+                            'storeId' => null,
+                            'shouldUpdateConsumerData' => false,
+                            'shouldBeSameCustomerBillingAddress' => false
                         ]
                     ]
                 ]

@@ -15,7 +15,13 @@ define([
     'Magento_Checkout/js/model/quote',
     'Magento_Customer/js/model/customer',
     'Chargeafter_Payment/js/model/launch-checkout',
-], function (quote, customer, launchCheckoutService) {
+    'Chargeafter_Payment/js/action/update-checkout-data'
+], function (
+    quote,
+    customer,
+    launchCheckoutService,
+    updateCheckoutDataAction
+) {
     'use strict';
 
     return function (messageContainer) {
@@ -39,14 +45,14 @@ define([
             }
         };
 
-        shippingAddress.street.forEach((line,index)=>consumerDetails.shippingAddress[`line${++index}`]=line);
-        billingAddress.street.forEach((line,index)=>consumerDetails.billingAddress[`line${++index}`]=line);
+        shippingAddress.street.forEach((line, index) => consumerDetails.shippingAddress[`line${++index}`] = line);
+        billingAddress.street.forEach((line, index) => consumerDetails.billingAddress[`line${++index}`] = line);
 
-        if(customer.isLoggedIn()){
-            consumerDetails.email=customer.customerData.email;
-            consumerDetails.merchantConsumerId=customer.customerData.id;
-        }else{
-            consumerDetails.email=quote.guestEmail;
+        if (customer.isLoggedIn()) {
+            consumerDetails.email = customer.customerData.email;
+            consumerDetails.merchantConsumerId = customer.customerData.id;
+        } else {
+            consumerDetails.email = quote.guestEmail;
         }
 
         const totals = quote.totals();
@@ -57,7 +63,7 @@ define([
             totalAmount: totals.base_grand_total,
         };
 
-        if(totals.discount_amount){
+        if (totals.discount_amount) {
             cartDetails.discounts = [
                 {
                     name: 'DISCOUNT',
@@ -66,7 +72,7 @@ define([
             ];
         }
 
-        cartDetails.items = quote.getItems().map(item=> {
+        cartDetails.items = quote.getItems().map(item => {
             var lineItem = {
                 name: item.name,
                 price: parseFloat(item.price),
@@ -86,15 +92,22 @@ define([
             return lineItem;
         });
 
-        const options =  {
+        const preferences = {
+            language: 'en',
+            currency: totals.quote_currency_code || totals.base_currency_code,
+            country: billingAddress.country_id || 'US',
+        };
+
+        const options = {
             consumerDetails,
 
             cartDetails,
 
             onDataUpdate(updatedData, callback) {
-                callback();
+                return updateCheckoutDataAction(updatedData);
             },
 
+            preferences
         };
 
         return launchCheckoutService(options, messageContainer);

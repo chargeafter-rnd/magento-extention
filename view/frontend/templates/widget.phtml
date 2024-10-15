@@ -7,18 +7,14 @@
  * @copyright   Copyright (c) 2021 ChargeAfter.com
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @author      taras@lagan.com.ua
+ *
+ * @var $block \Chargeafter\Payment\Block\PromotionalWidgetBlock
  */
-
 ?>
 <script type="text/x-magento-init">
     {
         "*": {
-            "Chargeafter_Payment/js/widget": {
-                "cdnUrl": "<?= /* @noEscape */ $block->getCdnUrl() ?>",
-                "caConfig": {
-                    "apiKey": "<?= /* @noEscape */ $block->getPublicKey() ?>"
-                }
-            }
+            "Chargeafter_Payment/js/widget": <?= /* @noEscape */ $block->getComponentJsonConfig() ?>
         }
     }
 </script>

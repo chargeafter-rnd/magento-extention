@@ -16,6 +16,7 @@ use Chargeafter\Payment\Registry\CurrentProductRegistry;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Quote\Api\Data\CartInterface;
@@ -44,11 +45,19 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
     protected $_helper;
 
     /**
+     * JsonHexTag Serializer Instance
+     *
+     * @var JsonHexTag
+     */
+    private $serializer;
+
+    /**
      * PromotionalWidgetBlock constructor.
      * @param ApiHelper $helper
      * @param CurrentProductRegistry $currentProductRegistry
      * @param CheckoutSession $checkoutSession
      * @param Context $context
+     * @param JsonHexTag $json
      * @param array $data
      */
     public function __construct(
@@ -56,11 +65,13 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
         CurrentProductRegistry $currentProductRegistry,
         CheckoutSession $checkoutSession,
         Template\Context $context,
+        JsonHexTag $json,
         array $data = []
     ) {
         $this->_helper = $helper;
         $this->currentProductRegistry = $currentProductRegistry;
         $this->checkoutSession = $checkoutSession;
+        $this->serializer = $json;
 
         parent::__construct($context, $data);
     }
@@ -99,5 +110,29 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
     public function getPublicKey(): string
     {
         return $this->_helper->getPublicKey();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoreId(): ?string
+    {
+        return $this->_helper->getStoreId();
+    }
+
+    /**
+     * Get configuration for UI component
+     *
+     * @return string
+     */
+    public function getComponentJsonConfig(): string
+    {
+        return $this->serializer->serialize([
+            'cdnUrl' => $this->getCdnUrl(),
+            'caConfig' => [
+                'apiKey' => $this->getPublicKey(),
+                'storeId' => $this->getStoreId()
+            ]
+        ]);
     }
 }
