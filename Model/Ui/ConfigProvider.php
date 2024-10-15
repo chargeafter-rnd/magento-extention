@@ -47,12 +47,14 @@ class ConfigProvider implements ConfigProviderInterface
     public function getConfig()
     {
         return [
-            'payment'=>[
+            'payment' => [
                 PaymentMethod::CODE => [
                     'description' => $this->_method->getConfigData('description'),
                     'cdnUrl' => $this->_helper->getCdnUrl(),
                     'publicKey' => $this->_helper->getPublicKey(),
-                    'isSameCustomerBillingAddress' => $this->_helper->isShippingEqualsBilling()
+                    'storeId' => $this->_helper->getStoreId(),
+                    'shouldUpdateConsumerData' => $this->_helper->shouldUpdateConsumerData(),
+                    'shouldBeSameCustomerBillingAddress' => $this->_helper->shouldBeShippingEqualsBilling()
                 ]
             ]
         ];

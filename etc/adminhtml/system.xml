@@ -120,13 +120,27 @@
                         <frontend_class>chargeafter-transaction-type-select</frontend_class>
                         <comment>If set to yes, customers will not have billing address option for a payment method and always use a shipping address as a billing.</comment>
                     </field>
+                    <field id="customer_data_update_active"
+                           translate="label"
+                           type="select"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           canRestore="1"
+                           sortOrder="150">
+                        <label>Enable customer data update</label>
+                        <config_path>payment/chargeafter/customer_data_update_active</config_path>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <frontend_class>chargeafter-active-select</frontend_class>
+                        <comment>If set to yes, changed customer data will be updated for Magento orders during checkout and order totals will be recalculated.</comment>
+                    </field>
                     <field id="sort_order"
                            type="text"
                            translate="label"
                            showInDefault="1"
                            showInStore="1"
                            showInWebsite="1"
-                           sortOrder="150">
+                           sortOrder="160">
                         <label>Sort Order</label>
                         <config_path>payment/chargeafter/sort_order</config_path>
                         <frontend_class>validate-number</frontend_class>
@@ -146,11 +160,23 @@
                            showInStore="1"
                            showInWebsite="1"
                            canRestore="1"
-                           sortOrder="30">
+                           sortOrder="20">
                         <label>Mode/Environment</label>
                         <config_path>payment/chargeafter/environment</config_path>
                         <source_model>Chargeafter\Payment\Model\Config\Source\Environment</source_model>
                         <frontend_class>chargeafter-environment-select</frontend_class>
+                    </field>
+                    <field id="production_public_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="30">
+                        <label>Production Public API Key</label>
+                        <validate>required-public-prod-chargeafter-key</validate>
+                        <config_path>payment/chargeafter/production_public_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
                     </field>
                     <field id="production_private_key"
                            type="text"
@@ -164,28 +190,16 @@
                         <config_path>payment/chargeafter/production_private_key</config_path>
                         <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
                     </field>
-                    <field id="production_public_key"
+                    <field id="production_store_id"
                            type="text"
                            translate="label"
                            showInDefault="1"
                            showInWebsite="1"
                            showInStore="1"
-                           sortOrder="41">
-                        <label>Production Public API Key</label>
-                        <validate>required-public-prod-chargeafter-key</validate>
-                        <config_path>payment/chargeafter/production_public_key</config_path>
-                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
-                    </field>
-                    <field id="sandbox_private_key"
-                           type="text"
-                           translate="label"
-                           showInDefault="1"
-                           showInWebsite="1"
-                           showInStore="1"
-                           sortOrder="42">
-                        <label>Sandbox Private API Key</label>
-                        <validate>required-private-sand-chargeafter-key</validate>
-                        <config_path>payment/chargeafter/sandbox_private_key</config_path>
+                           sortOrder="50">
+                        <label>Production Store ID</label>
+                        <validate>required-prod-chargeafter-store-id</validate>
+                        <config_path>payment/chargeafter/production_store_id</config_path>
                         <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
                     </field>
                     <field id="sandbox_public_key"
@@ -194,10 +208,34 @@
                            showInDefault="1"
                            showInWebsite="1"
                            showInStore="1"
-                           sortOrder="43">
+                           sortOrder="60">
                         <label>Sandbox Public API Key</label>
                         <validate>required-public-sand-chargeafter-key</validate>
                         <config_path>payment/chargeafter/sandbox_public_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                    <field id="sandbox_private_key"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="70">
+                        <label>Sandbox Private API Key</label>
+                        <validate>required-private-sand-chargeafter-key</validate>
+                        <config_path>payment/chargeafter/sandbox_private_key</config_path>
+                        <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
+                    </field>
+                    <field id="sandbox_store_id"
+                           type="text"
+                           translate="label"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1"
+                           sortOrder="80">
+                        <label>Sandbox Store ID</label>
+                        <validate>required-sand-store-id</validate>
+                        <config_path>payment/chargeafter/sandbox_store_id</config_path>
                         <comment><![CDATA[ Provided by Chargeafter Support ]]></comment>
                     </field>
                 </group>

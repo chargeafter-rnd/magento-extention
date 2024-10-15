@@ -97,6 +97,19 @@ class ApiHelper
      * @param $storeId
      * @return string|null
      */
+    public function getStoreId($storeId = null)
+    {
+        $value = $this->isSandboxMode($storeId)
+            ? $this->_config->getValue('sandbox_store_id', $storeId)
+            : $this->_config->getValue('production_store_id', $storeId);
+
+        return $value ? trim($value) : null;
+    }
+
+    /**
+     * @param $storeId
+     * @return string|null
+     */
     public function getTransactionType($storeId = null)
     {
         return $this->_config->getValue('transaction_type', $storeId);
@@ -106,8 +119,17 @@ class ApiHelper
      * @param $storeId
      * @return boolean
      */
-    public function isShippingEqualsBilling($storeId = null)
+    public function shouldBeShippingEqualsBilling($storeId = null)
     {
         return (bool)$this->_config->getValue('bill_to_equal_ship_to', $storeId);
+    }
+
+    /**
+     * @param $storeId
+     * @return boolean
+     */
+    public function shouldUpdateConsumerData($storeId = null)
+    {
+        return (bool)$this->_config->getValue('customer_data_update_active', $storeId);
     }
 }

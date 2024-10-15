@@ -10,6 +10,7 @@
 
 define([
     'Magento_Checkout/js/model/quote',
+    'Chargeafter_Payment/js/model/payment-config',
     'Magento_Checkout/js/action/select-billing-address',
     'Magento_Checkout/js/checkout-data',
     'Magento_Checkout/js/model/address-converter',
@@ -17,6 +18,7 @@ define([
 ],
 function (
     quote,
+    paymentConfig,
     selectBillingAddress,
     checkoutData,
     addressConverter,
@@ -40,7 +42,7 @@ function (
         isSameBillingAddressChargeAfterPayment: function () {
             return quote.paymentMethod() &&
                    quote.paymentMethod().method === 'chargeafter' &&
-                   window.checkoutConfig.payment[quote.paymentMethod().method]['isSameCustomerBillingAddress'];
+                   paymentConfig.getConfig('shouldBeSameCustomerBillingAddress');
         },
 
         useShippingAddressAsBilling() {

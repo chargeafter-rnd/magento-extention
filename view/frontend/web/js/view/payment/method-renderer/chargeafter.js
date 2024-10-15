@@ -8,19 +8,19 @@
  * @author      taras@lagan.com.ua
  */
 
-define(
-[
+define([
     'jquery',
     'Magento_Checkout/js/view/payment/default',
+    'Chargeafter_Payment/js/model/payment-config',
     'Chargeafter_Payment/js/model/load-api',
     'Magento_Checkout/js/model/quote',
     'Magento_Checkout/js/model/payment/additional-validators',
     'Chargeafter_Payment/js/action/launch-checkout',
     'Magento_Checkout/js/action/place-order'
-],
-function (
+], function (
     $,
     Component,
+    paymentConfig,
     loadApi,
     quote,
     additionalValidators,
@@ -38,13 +38,14 @@ function (
             this._super();
 
             loadApi(this.getConfig('cdnUrl'), {
-                apiKey: this.getConfig('publicKey')
+                apiKey: this.getConfig('publicKey'),
+                storeId: this.getConfig('storeId'),
             });
 
             return this;
         },
         getConfig: function (key) {
-            return window.checkoutConfig.payment[this.item.method][key];
+            return paymentConfig.getConfig(key);
         },
         /**
          * @return {*}
