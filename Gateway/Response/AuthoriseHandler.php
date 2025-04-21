@@ -22,11 +22,7 @@ class AuthoriseHandler implements HandlerInterface
     {
         $payment = $handlingSubject['payment']->getPayment();
 
-        if (
-            $response &&
-            key_exists('offer', $response) &&
-            key_exists('lender', $response['offer'])
-        ) {
+        if ($response && key_exists('offer', $response) && key_exists('lender', $response['offer'])) {
             $payment->setAdditionalInformation('lender', $response['offer']['lender']['name']);
         }
 
@@ -36,12 +32,10 @@ class AuthoriseHandler implements HandlerInterface
         $data = $payment->getAdditionalInformation('data');
         $data = $data ? json_decode($data, true) : null;
 
-        if (
-            $data &&
+        if ($data &&
             key_exists('lender', $data) &&
-            key_exists('information', $data['lender'] ) &&
-            key_exists('leaseId', $data['lender']['information'])
-        ) {
+            key_exists('information', $data['lender']) &&
+            key_exists('leaseId', $data['lender']['information'])) {
             $payment->setAdditionalInformation('leaseId', $data['lender']['information']['leaseId']);
         }
 

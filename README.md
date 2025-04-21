@@ -88,24 +88,5 @@ The process of creating a widget is nearly the same for each widget type. You ca
 ### Step 3: Complete the widget options
 
 1. In the left panel, choose Widget Options.
-2. Choose **Type**
-    - **product-widget**  
-    ![](https://files.readme.io/d9f0f64-product-widget.svg)
-      
-    - **product-widget-line-of-credit**  
-    ![](https://files.readme.io/33b8e22-product-widget-line-of-credit.svg)
-      
-    - **product-widget-installments**  
-      *Or $34/month for 36 months. Learn More*
-   
-    - **default-template** 
-      
-    - **textual**  
-      *Pay as low as $45.99 a month. Buy with ChargeAfter*
-      
-    - **banner-horizontal**
-    ![](https://files.readme.io/6e7cf34-banner-horizontal.svg)
-      
-    - **banner-vertical**  
-    ![](https://files.readme.io/a8b3e5a-banner-vertical.svg)
+2. Fill in the **Tag** and **Financial Page URL** fields. Optional 
       

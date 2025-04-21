@@ -91,7 +91,9 @@ class PromotionalWidgetBlock extends Template implements BlockInterface
             if (in_array('checkout_cart_index', $handle) && $this->checkoutSession) {
                 return $this->checkoutSession->getQuote();
             }
-        } catch (LocalizedException $e) {}
+        } catch (LocalizedException $e) {
+            //
+        }
 
         return null;
     }
