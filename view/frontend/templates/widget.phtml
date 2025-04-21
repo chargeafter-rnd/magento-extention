@@ -24,7 +24,7 @@ $widget_type_default = 'default-template';
 $widget_type = $block->getData('type');
 $widget_mode = $block->getData('mode');
 
-$widget_type = ( $widget_type && $widget_type !== $widget_type_default && $widget_type != $block::class ) ? null : $widget_type_default;
+$widget_type = ( $widget_type && $widget_type !== $widget_type_default && $widget_type != get_class($block) ) ? null : $widget_type_default;
 
 $product = $block->getProduct();
 $cart = $block->getCart();
