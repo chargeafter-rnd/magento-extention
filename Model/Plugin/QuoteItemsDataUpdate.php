@@ -113,7 +113,7 @@ class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
             if (!is_null($isWarranty)) {
                 $options['warranty'] = (bool)$isWarranty;
             }
-        } catch (\Magento\Framework\Exception\NoSuchEntityException) {
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
             //
         }
 
