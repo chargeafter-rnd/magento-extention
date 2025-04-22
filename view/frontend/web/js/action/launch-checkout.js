@@ -73,15 +73,17 @@ define([
         }
 
         cartDetails.items = quote.getItems().map(item => {
+            var chargeAfterOptions = 'chargeafter' in item ? item.chargeafter : {};
+
             var lineItem = {
                 name: item.name,
                 price: parseFloat(item.price),
                 sku: item.sku,
                 quantity: item.qty,
-                leasable: item.ca_is_leasable
+                leasable: 'leasable' in chargeAfterOptions ? chargeAfterOptions['leasable'] : true
             }
 
-            if (item.ca_with_warranty) {
+            if ('warranty' in chargeAfterOptions && chargeAfterOptions['warranty']) {
                 lineItem.warranty = {
                     name: item.name,
                     price: 0,

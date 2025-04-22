@@ -170,7 +170,6 @@ class PromotionalWidgetBlockTest extends TestCase
     public function getDataProvider()
     {
         return [
-            ['type', 'default-template'],
             ['tag', 'TAG123'],
             ['financing_page_url', 'https://example.com'],
             ['mode', 'price-focus'],

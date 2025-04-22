@@ -19,23 +19,22 @@
     }
 </script>
 <?php
+$widget_type_default = 'default-template';
+
 $widget_type = $block->getData('type');
 $widget_mode = $block->getData('mode');
 
-$product_widgets = ['product-widget','product-widget-line-of-credit','product-widget-installments','default-template'];
+$widget_type = ( $widget_type && $widget_type !== $widget_type_default && $widget_type != get_class($block) ) ? null : $widget_type_default;
 
 $product = $block->getProduct();
 $cart = $block->getCart();
 
-if (in_array($widget_type, $product_widgets) && (!$product && !$cart)) {
-    $widget_type = '';
-}
+if ($widget_type && ($product || $cart)) {
+    $output = "<div class=\"ca-promotional-widget\" style=\"margin:5px 0\"";
 
-$output = "<div class=\"ca-promotional-widget\" style=\"margin:5px 0\"";
-$output .= " data-widget-type=\"$widget_type\"";
-$output .= " data-widget-mode=\"$widget_mode\"";
+    $output .= " data-widget-type=\"$widget_type\"";
+    $output .= " data-widget-mode=\"$widget_mode\"";
 
-if (in_array($widget_type, $product_widgets)) {
     $widget_item_tag = $block->getData('tag');
     $financing_page_url = $block->getData('financing_page_url');
 
@@ -60,8 +59,8 @@ if (in_array($widget_type, $product_widgets)) {
     if ($financing_page_url) {
         $output .= " data-widget-financing-page-url=\"{$financing_page_url}\"";
     }
+
+    $output .= "></div>";
+
+    /* @noEscape */ echo $output;
 }
-
-$output .= "></div>";
-
-/* @noEscape */ echo $output;

@@ -5,8 +5,6 @@ namespace Chargeafter\Payment\Model\Plugin;
 use Magento\Catalog\Api\ProductRepositoryInterface as ProductRepository;
 use Magento\Checkout\Model\DefaultConfigProvider;
 use Magento\Checkout\Model\Session as CheckoutSession;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 
 /**
@@ -52,66 +50,73 @@ class QuoteItemsDataUpdate extends \Magento\Framework\Model\AbstractModel
      * @param DefaultConfigProvider $subject
      * @param array $result
      * @return array
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetConfig(\Magento\Checkout\Model\DefaultConfigProvider $subject, array $result)
     {
-        if (isset($result['quoteItemData'])) {
-            $result['quoteItemData'] = $this->updateQuoteItemData($result['quoteItemData']);
-        }
+        $result['quoteItemData'] = $this->getQuoteItemData();
 
         return $result;
     }
 
     /**
-     * Update Quote items
+     * Retrieve quote item data
      *
-     * @param $quoteItemData
-     * @return array|mixed
+     * @return array
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function updateQuoteItemData($quoteItemData)
+    private function getQuoteItemData()
     {
+        $quoteItemData = [];
         $quoteId = $this->checkoutSession->getQuote()->getId();
+
         if ($quoteId) {
-            $nonLeasableItems = $warrantyItems = [];
-
             $quoteItems = $this->quoteItemRepository->getList($quoteId);
-            foreach ($quoteItems as $quoteItem) {
-                $productId = $quoteItem->getProduct()->getIdBySku($quoteItem->getSku());
-                if ($productId == null) {
-                    $productId = $quoteItem->getProduct()->getId();
-                }
 
-                $product = $this->productRepository->getById($productId);
-                if ($product) {
-                    $nonLeasableAttribute = $product->getDataByKey('chargeafter_non_leasable');
-                    if ($nonLeasableAttribute) {
-                        $nonLeasableItems[$quoteItem->getItemId()] = $nonLeasableAttribute;
-                    }
-
-                    $warrantyAttribute = $product->getDataByKey('chargeafter_warranty');
-                    if ($warrantyAttribute) {
-                        $warrantyItems[$quoteItem->getItemId()] = $warrantyAttribute;
-                    }
-                }
+            foreach ($quoteItems as $index => $quoteItem) {
+                $quoteItemData[$index] = $quoteItem->toArray();
+                $quoteItemData[$index]['chargeafter'] = $this->getProductOptions($quoteItem);
             }
-
-            $nonLeasableCallable = function ($item) use ($nonLeasableItems, $warrantyItems) {
-                $itemId = $item['item_id'];
-
-                $item['ca_is_leasable'] = !key_exists($itemId, $nonLeasableItems);
-                $item['ca_with_warranty'] = key_exists($itemId, $warrantyItems);
-
-                return $item;
-            };
-
-            $quoteItemData = array_map($nonLeasableCallable, $quoteItemData);
         }
 
         return $quoteItemData;
+    }
+
+    /**
+     * Get product options
+     *
+     * @param $quoteItem
+     * @return array
+     */
+    private function getProductOptions($quoteItem)
+    {
+        $options = [ 'leasable' => true, 'warranty' => false ];
+
+        try {
+            $productId = $quoteItem->getProduct()->getIdBySku($quoteItem->getSku());
+            if ($productId == null) {
+                $productId = $quoteItem->getProduct()->getId();
+            }
+            $product = $this->productRepository->getById($productId);
+
+            $isNonLeasable = $product->getDataByKey('chargeafter_non_leasable');
+            $isWarranty = $product->getDataByKey('chargeafter_warranty');
+
+            if (!is_null($isNonLeasable)) {
+                $options['leasable'] = (bool)$isNonLeasable === false;
+            }
+
+            if (!is_null($isWarranty)) {
+                $options['warranty'] = (bool)$isWarranty;
+            }
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            //
+        }
+
+        return $options;
     }
 }

@@ -16,35 +16,6 @@
         <label>Chargeafter Payment Promotional Widget</label>
         <description>Chargeafter Payment Promotional Widget</description>
         <parameters>
-            <parameter name="type" xsi:type="select" visible="true" required="true" sort_order="20">
-                <label translate="true">Type</label>
-                <options>
-                    <option name="product-widget" value="product-widget">
-                        <label>product-widget</label>
-                    </option>
-                    <option name="banner-horizontal-upto-6months" value="banner-horizontal-upto-6months">
-                        <label>banner-horizontal-upto-6months</label>
-                    </option>
-                    <option name="product-widget-line-of-credit" value="product-widget-line-of-credit">
-                        <label>product-widget-line-of-credit</label>
-                    </option>
-                    <option name="product-widget-installments" value="product-widget-installments">
-                        <label>product-widget-installments</label>
-                    </option>
-                    <option name="default-template" value="default-template">
-                        <label>default-template</label>
-                    </option>
-                    <option name="textual" value="textual">
-                        <label>textual</label>
-                    </option>
-                    <option name="banner-horizontal" value="banner-horizontal">
-                        <label>banner-horizontal</label>
-                    </option>
-                    <option name="banner-vertical" value="banner-vertical">
-                        <label>banner-vertical</label>
-                    </option>
-                </options>
-            </parameter>
             <parameter name="tag" xsi:type="text" visible="true" sort_order="40">
                 <label translate="true">Tag</label>
             </parameter>

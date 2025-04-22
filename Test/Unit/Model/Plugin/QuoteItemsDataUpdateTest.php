@@ -90,6 +90,8 @@ class QuoteItemsDataUpdateTest extends TestCase
         $quoteItemMock->expects($this->any())->method('getProduct')->willReturn($productMock);
         $quoteItemMock->expects($this->any())->method('getItemId')->willReturn($data['item_id']);
 
+        $quoteItemMock->expects($this->once())->method('toArray')->willReturn((array)$data);
+
         return $quoteItemMock;
     }
 
@@ -131,8 +133,10 @@ class QuoteItemsDataUpdateTest extends TestCase
                                 'chargeafter_non_leasable' => '0',
                                 'chargeafter_warranty' => '0'
                             ],
-                            'ca_is_leasable' => true,
-                            'ca_with_warranty' => false
+                            'chargeafter' => [
+                                'leasable' => true,
+                                'warranty' => false
+                            ]
                         ],
                         [
                             'item_id' => 52,
@@ -140,8 +144,10 @@ class QuoteItemsDataUpdateTest extends TestCase
                                 'chargeafter_non_leasable' => '1',
                                 'chargeafter_warranty' => '1'
                             ],
-                            'ca_is_leasable' => false,
-                            'ca_with_warranty' => true
+                            'chargeafter' => [
+                                'leasable' => false,
+                                'warranty' => true
+                            ]
                         ],
                         [
                             'item_id' => 53,
@@ -149,8 +155,10 @@ class QuoteItemsDataUpdateTest extends TestCase
                                 'chargeafter_non_leasable' => null,
                                 'chargeafter_warranty' => null
                             ],
-                            'ca_is_leasable' => true,
-                            'ca_with_warranty' => false
+                            'chargeafter' => [
+                                'leasable' => true,
+                                'warranty' => false
+                            ]
                         ],
                     ]
                 ]
